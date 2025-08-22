@@ -11,6 +11,6 @@ export function useEdgeDb(req: H3Event<EventHandlerRequest> | undefined = undefi
       'ext::auth::client_token': req ? getCookie(req, 'edgedb-auth-token') : undefined,
     })
   }
-
+ 
   return client
 }

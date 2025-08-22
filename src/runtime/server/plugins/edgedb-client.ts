@@ -9,7 +9,7 @@ export default defineNitroPlugin(() => {
     dsn: dsn.full,
     tlsSecurity: dsn.tlsSecurity,
     tlsCA: dsn.tlsCA,
-  })
+  }) 
 
   globalThis.__nuxt_edgedb_client__ = client
 })

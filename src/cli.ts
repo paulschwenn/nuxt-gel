@@ -39,7 +39,7 @@ async function up() {
       catch (e) {
         spinner.stop('Failed to install Gel CLI.')
         p.log.warn(`Try running: \`${chalk.green('curl https://www.geldata.com/sh --proto "=https" -sSf1 | sh')}\` manually.`)
-      }
+      } 
     }
 
     if (!edgedbCliVersion) {
@@ -68,8 +68,8 @@ async function up() {
   const dbschemaPath = resolveProject(groupData.path)
 
   if (!existsSync(dbschemaPath)) {
-    p.log.error(`Your ${chalk.green('dbschema')} directory does not exist, you must run \`${chalk.green('gel project init')}\` at least once before running this command.`)
-  }
+    p.log.error(`Your ${chalk.green('dbschema')} directory does not exist, you must run \`${chalk.green('gel project init')}\` at least once before running this command.`) 
+  }  
 
   if (groupData.interfaces === 'yes') {
     const spinner = p.spinner()

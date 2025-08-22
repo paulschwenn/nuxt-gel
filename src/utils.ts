@@ -5,13 +5,26 @@ export async function getEdgeDbCredentials(
   cwd: string,
   processInject: boolean = true,
 ) {
+  console.log('🔍 [getEdgeDbCredentials] Debug Info:')
+  console.log('  - cwd parameter:', cwd)
+  console.log('  - process.cwd():', process.cwd())
+  console.log('  - processInject:', processInject)
+  
   let dbCredentials: any | undefined
 
   try {
-    dbCredentials = await execa({ cwd })`gel instance credentials --json`
+    console.log('  - About to run: gel instance credentials --json in cwd:', cwd)
+    dbCredentials = await execa('gel', ['instance', 'credentials', '--json'], { cwd })
+    console.log('  - Command succeeded, stdout:', dbCredentials.stdout)
   }
-  catch (e) {
-    console.log("There was an error getting the Gel instance credentials", e)
+  catch (e: any) {
+    console.log("❌ [getEdgeDbCredentials] Error getting Gel instance credentials:", e)
+    console.log("  - Error details:", {
+      command: e.command,
+      cwd: e.cwd,
+      exitCode: e.exitCode,
+      stderr: e.stderr
+    })
   }
 
   if (dbCredentials) {
@@ -46,6 +59,12 @@ export async function getEdgeDbConfiguration(
   cwd: string = process.cwd(),
   processInject: boolean = true,
 ) {
+  console.log('🔍 [getEdgeDbConfiguration] Debug Info:')
+  console.log('  - appUrl:', appUrl)
+  console.log('  - cwd parameter:', cwd)
+  console.log('  - processInject:', processInject)
+  console.log('  - options:', JSON.stringify(options, null, 2))
+  
   await getEdgeDbCredentials(cwd, processInject)
 
   const {
