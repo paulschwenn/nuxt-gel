@@ -14,13 +14,13 @@ async function up() {
    */
   let edgedbCliVersion: string | undefined
   try {
-    edgedbCliVersion = await execa.execa(`edgedb`, [`--version`], { cwd: resolveProject() }).then(result => result.stdout.replace('EdgeDB CLI ', ''))
+    edgedbCliVersion = await execa.execa(`gel`, [`--version`], { cwd: resolveProject() }).then(result => result.stdout.replace('Gel CLI ', ''))
   }
   catch (e) {}
 
   if (!edgedbCliVersion) {
     const setupEdgeDbCli = await p.select({
-      message: 'EdgeDB CLI not found, do you want to install EdgeDB it?',
+      message: 'Gel CLI not found, do you want to install Gel it?',
       options: [
         { label: 'Yes', value: 'yes', hint: 'recommended' },
         { label: 'No', value: 'no', hint: 'skip installation' },
@@ -31,14 +31,14 @@ async function up() {
       const spinner = p.spinner()
 
       try {
-        spinner.start('Installing EdgeDB CLI...')
-        await execa.$`curl https://sh.edgedb.com --proto '=https' -sSf1 | sh`
-        edgedbCliVersion = await execa.execa(`edgedb`, ['--version'], { cwd: resolveProject() }).then(result => result.stdout.replace('EdgeDB CLI ', ''))
-        spinner.stop(`EdgeDB CLI version ${edgedbCliVersion} installed.`)
+        spinner.start('Installing Gel CLI...')
+        await execa.$`curl https://www.geldata.com/sh --proto "=https" -sSf1 | sh`
+        edgedbCliVersion = await execa.execa(`gel`, ['--version'], { cwd: resolveProject() }).then(result => result.stdout.replace('Gel CLI ', ''))
+        spinner.stop(`Gel CLI version ${edgedbCliVersion} installed.`)
       }
       catch (e) {
-        spinner.stop('Failed to install EdgeDB CLI.')
-        p.log.warn(`Try running: \`${chalk.green('curl https://sh.edgedb.com --proto \'=https\' -sSf1 | sh')}\` manually.`)
+        spinner.stop('Failed to install Gel CLI.')
+        p.log.warn(`Try running: \`${chalk.green('curl https://www.geldata.com/sh --proto "=https" -sSf1 | sh')}\` manually.`)
       }
     }
 
@@ -47,7 +47,7 @@ async function up() {
     }
   }
   else {
-    p.log.success(`EdgeDB CLI version ${chalk.blue(edgedbCliVersion)} found.`)
+    p.log.success(`Gel CLI version ${chalk.blue(edgedbCliVersion)} found.`)
   }
 
   const groupData = await p.group(
@@ -68,14 +68,14 @@ async function up() {
   const dbschemaPath = resolveProject(groupData.path)
 
   if (!existsSync(dbschemaPath)) {
-    p.log.error(`Your ${chalk.green('dbschema')} directory does not exist, you must run \`${chalk.green('edgedb project init')}\` at least once before running this command.`)
+    p.log.error(`Your ${chalk.green('dbschema')} directory does not exist, you must run \`${chalk.green('gel project init')}\` at least once before running this command.`)
   }
 
   if (groupData.interfaces === 'yes') {
     const spinner = p.spinner()
 
     spinner.start('Generating interfaces...')
-    await execa.$`npx @edgedb/generate interfaces --file ${dbschemaPath}/interfaces.ts --force-overwrite`
+    await execa.$`npx @gel/generate interfaces --file ${dbschemaPath}/interfaces.ts --force-overwrite`
     spinner.stop('Interfaces generated.')
   }
 
@@ -83,7 +83,7 @@ async function up() {
     const spinner = p.spinner()
 
     spinner.start('Generating queries...')
-    await execa.$`npx @edgedb/generate queries --file ${dbschemaPath}/queries --target=ts --force-overwrite`
+    await execa.$`npx @gel/generate queries --file ${dbschemaPath}/queries --target=ts --force-overwrite`
     spinner.stop('Queries generated.')
   }
 
@@ -91,7 +91,7 @@ async function up() {
     const spinner = p.spinner()
 
     spinner.start('Generating query builder...')
-    await execa.$`npx @edgedb/generate edgeql-js --output-dir ${dbschemaPath}/query-builder --force-overwrite --target=ts`
+    await execa.$`npx @gel/generate edgeql-js --output-dir ${dbschemaPath}/query-builder --force-overwrite --target=ts`
     spinner.stop('Query builder generated.')
   }
 

@@ -1,6 +1,6 @@
 import { getCookie } from 'h3'
 import type { EventHandlerRequest, H3Event } from 'h3'
-import type { Client } from 'edgedb'
+import type { Client } from 'gel'
 
 export function useEdgeDb(req: H3Event<EventHandlerRequest> | undefined = undefined) {
   // @ts-expect-error - untyped global

@@ -1,4 +1,4 @@
-import { createClient } from 'edgedb'
+import { createClient } from 'gel'
 import { defineNitroPlugin } from 'nitropack/dist/runtime/plugin'
 import { useEdgeDbEnv } from '../composables/useEdgeDbEnv'
 

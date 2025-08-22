@@ -40,10 +40,11 @@
   "dependencies": {
     "@clack/core": "^0.3.4",
     "@clack/prompts": "^0.7.0",
-    "@edgedb/generate": "^0.5.3",
+    "@gel/generate": "^0.6.4",
     "@nuxt/kit": "^3.12.2",
     "edgedb": "^1.5.7",
     "execa": "^9.2.0",
+    "gel": "^2.1.1",
     "prompts": "^2.4.2"
   },
   "devDependencies": {

@@ -52,6 +52,7 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
     // Transpile edgedb
     nuxt.options.build.transpile ??= []
     nuxt.options.build.transpile.push('edgedb')
+    nuxt.options.build.transpile.push('gel')
     nuxt.options.build.transpile.push('nuxt-edgedb-module')
 
     const envAppUrl = process.env.APP_URL || process.env.NUXT_EDGEDB_APP_URL

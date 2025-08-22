@@ -13,7 +13,7 @@ Integrate [Nuxt 3](https://nuxt.com) with [EdgeDB](https://www.edgedb.com) effor
 
 - 🍱 **Effortless Integration**: Set up a database with just one line of configuration.
 - 🎩 **Live Schema Updates**: Experience _HMR-like DX_ with watchers on **schema**, **queries**, and **migrations**.
-- 🛟 **Typed Query Generation**: Automatically generate a typed query client with [@edgedb/generate](https://www.edgedb.com/docs/clients/js/generation).
+- 🛟 **Typed Query Generation**: Automatically generate a typed query client with [@gel/generate](https://www.edgedb.com/docs/clients/js/generation).
 - 🍩 **Integrated Database Management**: Pilot your database from [Nuxt DevTools](https://github.com/nuxt/devtools).
 - 🔐 **Flexible Auth**: 1-line toggle [Email](https://www.edgedb.com/docs/guides/auth/email_password) or [OAuth](https://www.edgedb.com/docs/guides/auth/oauth) authentication, with support for custom auth providers.
 - 🧙 **Initial guidance**: Guides you through [EdgeDB CLI](https://www.edgedb.com/docs/cli/index) setup and [project initialization](https://www.edgedb.com/docs/cli/edgedb_project/edgedb_project_init).
@@ -481,9 +481,9 @@ I would recommend looking at [https://github.com/edgedb/edgedb-examples] that is
 
 ```sh
 # Your EdgeDB instance auth extension base URL
-NUXT_EDGEDB_AUTH_BASE_URL=http://localhost:10702/db/edgedb/ext/auth/
+NUXT_EDGEDB_AUTH_BASE_URL=http://localhost:10702/branch/edgedb/ext/auth/
 # Your EdgeDB instance OAuth callback URL
-NUXT_EDGEDB_OAUTH_CALLBACK=http://localhost:10702/db/edgedb/ext/auth/callback
+NUXT_EDGEDB_OAUTH_CALLBACK=http://localhost:10702/branch/edgedb/ext/auth/callback
 # Your app callback page
 NUXT_EDGEDB_OAUTH_REDIRECT_URL=http://localhost:3000/auth/callback
 # Your app app reset password URL (receiving the token from the forgot password email)
@@ -552,7 +552,7 @@ You will need to provide these queries with a client from `createClient()`.
 
 ```vue
 <script setup lang="ts">
-import { createClient } from 'edgedb'
+import { createClient } from 'gel'
 import { getUser } from '@dbschema/queries'
 
 const client = createClient()

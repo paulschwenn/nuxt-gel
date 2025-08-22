@@ -33,7 +33,24 @@ export async function getEdgeDbCredentials(
       if (!process.env.NUXT_EDGEDB_TLS_SECURITY)
         process.env.NUXT_EDGEDB_TLS_SECURITY = tls_security
       if (!process.env.NUXT_EDGEDB_AUTH_BASE_URL)
-        process.env.NUXT_EDGEDB_AUTH_BASE_URL = `http://${host}:${port}/db/${database}/ext/auth/`
+        process.env.NUXT_EDGEDB_AUTH_BASE_URL = `http://${host}:${port}/branch/${database}/ext/auth/`
+
+      if (!process.env.NUXT_GEL_HOST)
+        process.env.NUXT_GEL_HOST = host
+      if (!process.env.NUXT_GEL_PORT)
+        process.env.NUXT_GEL_PORT = port
+      if (!process.env.NUXT_GEL_DATABASE)
+        process.env.NUXT_GEL_DATABASE = database
+      if (!process.env.NUXT_GEL_USER)
+        process.env.NUXT_GEL_USER = user
+      if (!process.env.NUXT_GEL_PASS)
+        process.env.NUXT_GEL_PASS = password
+      if (!process.env.NUXT_GEL_TLS_CA)
+        process.env.NUXT_GEL_TLS_CA = tls_ca
+      if (!process.env.NUXT_GEL_TLS_SECURITY)
+        process.env.NUXT_GEL_TLS_SECURITY = tls_security
+      if (!process.env.NUXT_GEL_AUTH_BASE_URL)
+        process.env.NUXT_GEL_AUTH_BASE_URL = `http://${host}:${port}/branch/${database}/ext/auth/`
     }
 
     return { host, port, database, user, password, tls_ca, tls_security }
@@ -62,8 +79,8 @@ export async function getEdgeDbConfiguration(
     NUXT_EDGEDB_IDENTITY_MODEL: identityModel = options?.identityModel || 'User',
 
     // EdgeDB Auth URls
-    NUXT_EDGEDB_AUTH_BASE_URL: authBaseUrl = `http://${host}:${port}/db/${database}/ext/auth/`,
-    NUXT_EDGEDB_OAUTH_CALLBACK: oAuthCallbackUrl = `http://${host}:${port}/db/${database}/ext/auth/callback`,
+    NUXT_EDGEDB_AUTH_BASE_URL: authBaseUrl = `http://${host}:${port}/branch/${database}/ext/auth/`,
+    NUXT_EDGEDB_OAUTH_CALLBACK: oAuthCallbackUrl = `http://${host}:${port}/branch/${database}/ext/auth/callback`,
 
     // EdgeDB Nuxt Auth URLs
     NUXT_EDGEDB_AUTH_VERIFY_REDIRECT_URL: verifyRedirectUrl = `${appUrl}/auth/verify`,
