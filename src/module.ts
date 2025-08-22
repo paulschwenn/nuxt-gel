@@ -51,11 +51,11 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
 
     // Transpile edgedb
     nuxt.options.build.transpile ??= []
-    nuxt.options.build.transpile.push('edgedb')
+    // nuxt.options.build.transpile.push('edgedb')
     nuxt.options.build.transpile.push('gel')
     nuxt.options.build.transpile.push('nuxt-edgedb-module')
 
-    const envAppUrl = process.env.APP_URL || process.env.NUXT_EDGEDB_APP_URL
+    const envAppUrl = process.env.APP_URL || process.env.NUXT_GEL_APP_URL
 
     // Create dev app url
     const devAppUrl = [
@@ -77,7 +77,7 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
       let uiUrl: any | undefined
       if (!process.env.NUXT_EDGEDB_UI_URL && options.injectDbCredentials) {
         try {
-          uiUrl = await execa.execa(`edgedb`, ['ui', '--print-url'], { cwd: resolveProject() })
+          uiUrl = await execa.execa(`gel`, ['ui', '--print-url'], { cwd: resolveProject() })
         }
         catch (e) {
           //
@@ -106,7 +106,7 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
     }
 
     if (!existsSync(dbschemaDir)) {
-      logger.withTag('edgedb').error(`Could not find dbschema directory.\n\nYou must run "${chalk.green.bold('edgedb project init')}" in your project root.`)
+      logger.withTag('gel').error(`Could not find dbschema directory.\n\nYou must run "${chalk.green.bold('gel project init')}" in your project root.`)
       process.exit(1)
     }
 

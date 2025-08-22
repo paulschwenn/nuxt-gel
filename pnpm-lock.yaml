@@ -23,9 +23,6 @@ importers:
       '@nuxt/kit':
         specifier: ^3.12.2
         version: 3.18.1(magicast@0.3.5)
-      edgedb:
-        specifier: ^1.5.7
-        version: 1.5.12
       execa:
         specifier: ^9.2.0
         version: 9.6.0
@@ -3187,11 +3184,6 @@ packages:
 
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
-
-  edgedb@1.5.12:
-    resolution: {integrity: sha512-IZHCAyKmdSpLqGuM2oSrw0037Qr8Y0S5KoJYArsc5KYJCv10ScU7Uyr/b7pOd2UYWx8DBFSyTmMweIgFRVOdCQ==}
-    engines: {node: '>= 18.0.0'}
-    hasBin: true
 
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
@@ -9385,16 +9377,6 @@ snapshots:
   duplexer@0.1.2: {}
 
   eastasianwidth@0.2.0: {}
-
-  edgedb@1.5.12:
-    dependencies:
-      debug: 4.4.1
-      env-paths: 3.0.0
-      semver: 7.7.2
-      shell-quote: 1.8.3
-      which: 4.0.0
-    transitivePeerDependencies:
-      - supports-color
 
   ee-first@1.1.1: {}
 

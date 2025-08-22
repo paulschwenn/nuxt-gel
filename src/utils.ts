@@ -8,33 +8,16 @@ export async function getEdgeDbCredentials(
   let dbCredentials: any | undefined
 
   try {
-    dbCredentials = await execa({ cwd })`edgedb instance credentials --json`
+    dbCredentials = await execa({ cwd })`gel instance credentials --json`
   }
   catch (e) {
-    // Silently fail, the EdgeDB instance credentials command failed.
+    console.log("There was an error getting the Gel instance credentials", e)
   }
 
   if (dbCredentials) {
     const { host, port, database, user, password, tls_ca, tls_security } = JSON.parse(dbCredentials.stdout)
 
     if (processInject) {
-      if (!process.env.NUXT_EDGEDB_HOST)
-        process.env.NUXT_EDGEDB_HOST = host
-      if (!process.env.NUXT_EDGEDB_PORT)
-        process.env.NUXT_EDGEDB_PORT = port
-      if (!process.env.NUXT_EDGEDB_DATABASE)
-        process.env.NUXT_EDGEDB_DATABASE = database
-      if (!process.env.NUXT_EDGEDB_USER)
-        process.env.NUXT_EDGEDB_USER = user
-      if (!process.env.NUXT_EDGEDB_PASS)
-        process.env.NUXT_EDGEDB_PASS = password
-      if (!process.env.NUXT_EDGEDB_TLS_CA)
-        process.env.NUXT_EDGEDB_TLS_CA = tls_ca
-      if (!process.env.NUXT_EDGEDB_TLS_SECURITY)
-        process.env.NUXT_EDGEDB_TLS_SECURITY = tls_security
-      if (!process.env.NUXT_EDGEDB_AUTH_BASE_URL)
-        process.env.NUXT_EDGEDB_AUTH_BASE_URL = `http://${host}:${port}/branch/${database}/ext/auth/`
-
       if (!process.env.NUXT_GEL_HOST)
         process.env.NUXT_GEL_HOST = host
       if (!process.env.NUXT_GEL_PORT)
@@ -66,26 +49,26 @@ export async function getEdgeDbConfiguration(
   await getEdgeDbCredentials(cwd, processInject)
 
   const {
-    // EdgeDB DSN settings
-    NUXT_EDGEDB_HOST: host,
-    NUXT_EDGEDB_PORT: port,
-    NUXT_EDGEDB_USER: user,
-    NUXT_EDGEDB_PASS: pass,
-    NUXT_EDGEDB_DATABASE: database,
-    NUXT_EDGEDB_TLS_CA: tlsCA,
-    NUXT_EDGEDB_TLS_SECURITY: tlsSecurity,
+    // Gel DSN settings
+    NUXT_GEL_HOST: host,
+    NUXT_GEL_PORT: port,
+    NUXT_GEL_USER: user,
+    NUXT_GEL_PASS: pass,
+    NUXT_GEL_DATABASE: database,
+    NUXT_GEL_TLS_CA: tlsCA,
+    NUXT_GEL_TLS_SECURITY: tlsSecurity,
 
-    // EdgeDB Auth settings
-    NUXT_EDGEDB_IDENTITY_MODEL: identityModel = options?.identityModel || 'User',
+    // Gel Auth settings
+    NUXT_GEL_IDENTITY_MODEL: identityModel = options?.identityModel || 'User',
 
-    // EdgeDB Auth URls
-    NUXT_EDGEDB_AUTH_BASE_URL: authBaseUrl = `http://${host}:${port}/branch/${database}/ext/auth/`,
-    NUXT_EDGEDB_OAUTH_CALLBACK: oAuthCallbackUrl = `http://${host}:${port}/branch/${database}/ext/auth/callback`,
+    // Gel Auth URls
+    NUXT_GEL_AUTH_BASE_URL: authBaseUrl = `http://${host}:${port}/branch/${database}/ext/auth/`,
+    NUXT_GEL_OAUTH_CALLBACK: oAuthCallbackUrl = `http://${host}:${port}/branch/${database}/ext/auth/callback`,
 
-    // EdgeDB Nuxt Auth URLs
-    NUXT_EDGEDB_AUTH_VERIFY_REDIRECT_URL: verifyRedirectUrl = `${appUrl}/auth/verify`,
-    NUXT_EDGEDB_AUTH_RESET_PASSWORD_URL: resetPasswordUrl = `${appUrl}/auth/reset-password`,
-    NUXT_EDGEDB_OAUTH_REDIRECT_URL: oAuthRedirectUrl = `${appUrl}/auth/callback`,
+    // Gel Nuxt Auth URLs
+    NUXT_GEL_AUTH_VERIFY_REDIRECT_URL: verifyRedirectUrl = `${appUrl}/auth/verify`,
+    NUXT_GEL_AUTH_RESET_PASSWORD_URL: resetPasswordUrl = `${appUrl}/auth/reset-password`,
+    NUXT_GEL_OAUTH_REDIRECT_URL: oAuthRedirectUrl = `${appUrl}/auth/callback`,
   } = process.env
 
   const dsn = {
@@ -96,17 +79,17 @@ export async function getEdgeDbConfiguration(
     database,
     tlsCA,
     tlsSecurity: tlsSecurity as 'insecure' | 'no_host_verification' | 'strict' | 'default' | undefined,
-    full: `edgedb://${user}:${pass}@${host}:${port}/${database}`,
+    full: `gel://${user}:${pass}@${host}:${port}/${database}`,
   }
 
   const urls = {
-    // EdgeDB Nuxt Auth URLs
+    // Gel Nuxt Auth URLs
     appUrl,
     resetPasswordUrl,
     verifyRedirectUrl,
     oAuthRedirectUrl,
 
-    // EdgeDB Auth URls
+    // Gel Auth URls
     authBaseUrl,
     oAuthCallbackUrl,
   }
