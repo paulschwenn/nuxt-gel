@@ -170,7 +170,7 @@
 
 ### 🩹 Fixes
 
-- **identity:** Fix useEdgeDbIdentity runtime import ([1c66b13](https://github.com/tahul/nuxt-edgedb/commit/1c66b13))
+- **identity:** Fix useGelIdentity runtime import ([1c66b13](https://github.com/tahul/nuxt-edgedb/commit/1c66b13))
 
 ### ❤️ Contributors
 
@@ -225,7 +225,7 @@
 
 ### 🩹 Fixes
 
-- Import `useEdgeDbIdentity` ([#18](https://github.com/tahul/nuxt-edgedb/pull/18))
+- Import `useGelIdentity` ([#18](https://github.com/tahul/nuxt-edgedb/pull/18))
 - **types:** Up ([458107c](https://github.com/tahul/nuxt-edgedb/commit/458107c))
 
 ### 🏡 Chore

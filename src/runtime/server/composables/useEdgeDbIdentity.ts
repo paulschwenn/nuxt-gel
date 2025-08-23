@@ -2,7 +2,7 @@ import type { EventHandlerRequest, H3Event } from 'h3'
 import { getCookie, sendRedirect, setCookie } from 'h3'
 import { useEdgeDb } from './useEdgeDb'
 
-interface UseEdgeDbIdentityData<T = any> {
+interface UseGelIdentityData<T = any> {
   identity: T
   cookie: string
   update: (event?: H3Event) => Promise<void>
@@ -10,9 +10,9 @@ interface UseEdgeDbIdentityData<T = any> {
   isLoggedIn: boolean
 }
 
-export async function useEdgeDbIdentity<T>(
+export async function useGelIdentity<T>(
   req: H3Event<EventHandlerRequest> | undefined = undefined,
-): Promise<UseEdgeDbIdentityData<T>> {
+): Promise<UseGelIdentityData<T>> {
   const client = useEdgeDb(req)
 
   let token: string | undefined
@@ -44,7 +44,7 @@ export async function useEdgeDbIdentity<T>(
     cookie: token,
     update,
     logout,
-  } as UseEdgeDbIdentityData
+  } as UseGelIdentityData
 
   return identityData
 }

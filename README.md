@@ -425,11 +425,11 @@ Amazing right?! In just a few lines, we just added a basic authentication to our
 
 ### Client-side usage
 
-Now that the authentication is implemented, you also have access to the `useEdgeDbIdentity` composable in your Nuxt app.
+Now that the authentication is implemented, you also have access to the `useGelIdentity` composable in your Nuxt app.
 
 ```vue
 <script setup lang="ts">
-const { isLoggedIn } = useEdgeDbIdentity()
+const { isLoggedIn } = useGelIdentity()
 </script>
 
 <template>
@@ -440,7 +440,7 @@ const { isLoggedIn } = useEdgeDbIdentity()
 </template>
 ```
 
-You can look at the [`useEdgeDbIdentity`](./src/runtime/composables/useEdgeDbIdentity.ts) for more details.
+You can look at the [`useGelIdentity`](./src/runtime/composables/useGelIdentity.ts) for more details.
 
 ### Server-side usage
 

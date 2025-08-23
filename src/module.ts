@@ -258,8 +258,8 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
       // Server
       addServerImports([
         {
-          from: resolveLocal('./runtime/server/composables/useEdgeDbIdentity'),
-          name: 'useEdgeDbIdentity',
+          from: resolveLocal('./runtime/server/composables/useGelIdentity'),
+          name: 'useGelIdentity',
         },
       ])
       addServerHandler({
