@@ -1,6 +1,35 @@
 # Changelog
 
 
+## v0.1.0
+
+[compare changes](https://github.com/veritymedia/nuxt-gel/compare/v0.0.52...v0.1.0)
+
+### 🚀 Major Release: Migration from EdgeDB to Gel
+
+- **BREAKING CHANGE**: Complete rebranding from EdgeDB to Gel
+- **BREAKING CHANGE**: Package renamed from `nuxt-edgedb-module` to `nuxt-gel-module`
+- **BREAKING CHANGE**: All configuration keys changed from `edgeDb` to `gel`
+- **BREAKING CHANGE**: All composables renamed: `useEdgeDb` → `useGel`, `useEdgeDbQueries` → `useGelQueries`
+- **BREAKING CHANGE**: All import paths updated: `#edgedb/*` → `#gel/*`
+- **BREAKING CHANGE**: All component names updated: `EdgeDb*` → `Gel*`
+- **BREAKING CHANGE**: All cookie names updated: `edgedb-*` → `gel-*`
+- **BREAKING CHANGE**: All hook events updated: `edgedb:*` → `gel:*`
+- **BREAKING CHANGE**: All environment variables updated: `NUXT_EDGEDB_*` → `NUXT_GEL_*`
+- **BREAKING CHANGE**: Repository moved from `tahul/nuxt-edgedb` to `veritymedia/nuxt-gel`
+- **BREAKING CHANGE**: Website URLs updated from `edgedb.com` to `geldata.com`
+
+### 🎯 Features
+
+- **Gel Integration**: Full support for the latest Gel database technology
+- **Modern Architecture**: Updated to work with Gel 2.x and latest Nuxt 3
+- **Enhanced Documentation**: Complete README update with Gel branding
+- **Improved CLI**: Updated CLI with Gel terminology and commands
+
+### ❤️ Contributors
+
+- Verity Media Team ([@veritymedia](http://github.com/veritymedia))
+
 ## v0.0.52
 
 [compare changes](https://github.com/tahul/nuxt-edgedb/compare/v0.0.51...v0.0.52)

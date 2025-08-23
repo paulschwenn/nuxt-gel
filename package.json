@@ -1,10 +1,21 @@
 {
   "name": "nuxt-gel-module",
   "type": "module",
-  "version": "0.0.52",
+  "version": "0.1.0",
   "description": "Nuxt 3 integration for Gel.",
   "license": "MIT",
-  "repository": "veritymedia/nuxt-gel",
+  "repository": "github:veritymedia/nuxt-gel",
+  "homepage": "https://github.com/veritymedia/nuxt-gel#readme",
+  "keywords": [
+    "nuxt",
+    "nuxt-module",
+    "gel",
+    "database",
+    "edgedb",
+    "typescript",
+    "authentication"
+  ],
+  "author": "veritymedia",
   "bin": "./dist/cli.mjs",
   "exports": {
     ".": {

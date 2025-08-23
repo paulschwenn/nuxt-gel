@@ -58,7 +58,7 @@ Temporary Items
 # Asdf
 .tool-versions
 
-# EdgeDB
+# Gel
 **/*.edgeql.ts
 **/dbschema/queries.*
 **/dbschema/query-builder
