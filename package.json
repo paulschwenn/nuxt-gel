@@ -1,10 +1,10 @@
 {
-  "name": "nuxt-edgedb-module",
+  "name": "nuxt-gel-module",
   "type": "module",
   "version": "0.0.52",
-  "description": "Nuxt 3 integration for EdgeDB.",
+  "description": "Nuxt 3 integration for Gel.",
   "license": "MIT",
-  "repository": "tahul/nuxt-edgedb",
+  "repository": "veritymedia/nuxt-gel",
   "bin": "./dist/cli.mjs",
   "exports": {
     ".": {
@@ -66,6 +66,6 @@
     "vitest": "^1.6.0"
   },
   "resolutions": {
-    "nuxt-edgedb-module": "link:."
+    "nuxt-gel-module": "link:."
   }
 }

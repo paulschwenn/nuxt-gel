@@ -16,6 +16,6 @@
     "@gel/generate": "^0.6.4",
     "@nuxt/devtools": "latest",
     "nuxt": "^3.14.0",
-    "nuxt-edgedb-module": "link:.."
+    "nuxt-gel-module": "link:.."
   }
 }
