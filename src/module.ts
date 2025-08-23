@@ -4,7 +4,7 @@ import { addComponentsDir, addImports, addPlugin, addServerHandler, addServerImp
 import { join } from 'pathe'
 import * as execa from 'execa'
 import chalk from 'chalk'
-import { getEdgeDbConfiguration } from './utils'
+import { getGelConfiguration } from './utils'
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {
@@ -79,7 +79,7 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
     console.log('  - About to set basic runtime config (no Gel operations)')
 
     // Inject runtime configuration
-    nuxt.options.runtimeConfig.gel ??= await getEdgeDbConfiguration(appUrl, options, nuxt.options.rootDir, options.injectDbCredentials) as any
+    nuxt.options.runtimeConfig.gel ??= await getGelConfiguration(appUrl, options, nuxt.options.rootDir, options.injectDbCredentials) as any
 
     // Set basic runtime configuration at build time (no Gel operations)
     // nuxt.options.runtimeConfig.gel ??= {
@@ -165,24 +165,24 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
       // Add server imports manually
       addServerImports([
         {
-          from: resolveLocal('./runtime/server/composables/useEdgeDb'),
-          name: 'useEdgeDb',
+          from: resolveLocal('./runtime/server/composables/useGel'),
+          name: 'useGel',
         },
         {
-          from: resolveLocal('./runtime/server/composables/useEdgeDbEnv'),
-          name: 'useEdgeDbEnv',
+          from: resolveLocal('./runtime/server/composables/useGelEnv'),
+          name: 'useGelEnv',
         },
         {
-          from: resolveLocal('./runtime/server/composables/useEdgeDbPKCE'),
-          name: 'useEdgeDbPKCE',
+          from: resolveLocal('./runtime/server/composables/useGelPKCE'),
+          name: 'useGelPKCE',
         },
       ])
 
       if (hasQueryBuilder) {
         addServerImports([
           {
-            from: resolveLocal('./runtime/server/composables/useEdgeDbQueryBuilder'),
-            name: 'useEdgeDbQueryBuilder',
+            from: resolveLocal('./runtime/server/composables/useGelQueryBuilder'),
+            name: 'useGelQueryBuilder',
           },
         ])
       }
@@ -190,8 +190,8 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
       if (hasQueries) {
         addServerImports([
           {
-            from: resolveLocal('./runtime/server/composables/useEdgeDbQueries'),
-            name: 'useEdgeDbQueries',
+            from: resolveLocal('./runtime/server/composables/useGelQueries'),
+            name: 'useGelQueries',
           },
         ])
       }

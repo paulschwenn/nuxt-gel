@@ -1,7 +1,7 @@
 import { execa } from 'execa'
 import type { ModuleOptions } from './module'
 
-export async function getEdgeDbCredentials(
+export async function getGelCredentials(
   cwd: string,
   processInject: boolean = true,
 ) {
@@ -55,7 +55,7 @@ export async function getEdgeDbCredentials(
   }
 }
 
-export async function getEdgeDbConfiguration(
+export async function getGelConfiguration(
   appUrl: string,
   options: Partial<ModuleOptions> = {},
   cwd: string = process.cwd(),
@@ -67,7 +67,7 @@ export async function getEdgeDbConfiguration(
   console.log('  - processInject:', processInject)
   console.log('  - options:', JSON.stringify(options, null, 2))
   
-  await getEdgeDbCredentials(cwd, processInject)
+      await getGelCredentials(cwd, processInject)
 
   const {
     // Gel DSN settings
