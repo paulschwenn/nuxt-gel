@@ -4,9 +4,9 @@ import { defineNuxtPlugin, navigateTo, useCookie, useState } from 'nuxt/app'
 import { computed } from 'vue'
 
 export default defineNuxtPlugin(async (nuxtApp) => {
-  const identity = useState<any>('edgedb-auth-identity', () => undefined)
+  const identity = useState<any>('gel-auth-identity', () => undefined)
 
-  const cookie = useCookie('edgedb-auth-token')
+  const cookie = useCookie('gel-auth-token')
 
   const isLoggedIn = computed(() => !!((identity as Ref<User>)?.value))
 
@@ -52,11 +52,11 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
   return {
     provide: {
-      edgeDbIsLoggedIn: isLoggedIn,
-      edgeDbCookie: cookie,
-      edgeDbIdentity: identity,
-      edgeDbUpdateIdentity: updateIdentity,
-      edgeDbLogout: logout,
+      gelIsLoggedIn: isLoggedIn,
+      gelCookie: cookie,
+      gelIdentity: identity,
+      gelUpdateIdentity: updateIdentity,
+      gelLogout: logout,
     },
   }
 })

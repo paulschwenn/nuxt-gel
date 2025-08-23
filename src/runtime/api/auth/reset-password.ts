@@ -1,5 +1,5 @@
 import { H3Error, defineEventHandler, getCookie, readBody, sendError, setHeaders } from 'h3'
-import { useEdgeDbEnv } from '../../server/composables/useEdgeDbEnv'
+import { useGelEnv } from '../../server/composables/useGelEnv'
 
 /**
  * Send new password with reset token to EdgeDB Auth.
@@ -7,7 +7,7 @@ import { useEdgeDbEnv } from '../../server/composables/useEdgeDbEnv'
  * @param {Request} req
  */
 export default defineEventHandler(async (req) => {
-  const { urls } = useEdgeDbEnv()
+  const { urls } = useGelEnv()
   const { authBaseUrl } = urls
   const { reset_token, password } = await readBody(req)
 

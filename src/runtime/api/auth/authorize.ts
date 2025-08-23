@@ -1,6 +1,6 @@
 import { H3Error, defineEventHandler, getRequestURL, sendError, setHeaders } from 'h3'
-import { useEdgeDbEnv } from '../../server/composables/useEdgeDbEnv'
-import { useEdgeDbPKCE } from '../../server/composables/useEdgeDbPKCE'
+import { useGelEnv } from '../../server/composables/useGelEnv'
+import { useGelPKCE } from '../../server/composables/useGelPKCE'
 
 /**
  * Redirects OAuth requests to EdgeDB Auth OAuth authorize redirect
@@ -10,7 +10,7 @@ import { useEdgeDbPKCE } from '../../server/composables/useEdgeDbPKCE'
  * @param {Request} req
  */
 export default defineEventHandler(async (req) => {
-  const { urls } = useEdgeDbEnv()
+  const { urls } = useGelEnv()
   const { authBaseUrl, oAuthRedirectUrl } = urls
   const requestUrl = getRequestURL(req)
   const provider = requestUrl.searchParams.get('provider')
@@ -21,7 +21,7 @@ export default defineEventHandler(async (req) => {
     return sendError(req, err)
   }
 
-  const pkce = useEdgeDbPKCE()
+      const pkce = useGelPKCE()
   const redirectUrl = new URL('authorize', authBaseUrl)
   redirectUrl.searchParams.set('provider', provider)
   redirectUrl.searchParams.set('challenge', pkce.challenge)

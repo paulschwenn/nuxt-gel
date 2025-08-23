@@ -1,5 +1,5 @@
 import { H3Error, defineEventHandler, getCookie, getRequestURL, sendError, setHeaders } from 'h3'
-import { useEdgeDbEnv } from '../../server/composables/useEdgeDbEnv'
+import { useGelEnv } from '../../server/composables/useGelEnv'
 
 /**
  * Handles the link in the email verification flow.
@@ -7,7 +7,7 @@ import { useEdgeDbEnv } from '../../server/composables/useEdgeDbEnv'
  * @param {Request} req
  */
 export default defineEventHandler(async (req) => {
-  const { urls } = useEdgeDbEnv()
+  const { urls } = useGelEnv()
   const { authBaseUrl } = urls
 
   const requestUrl = getRequestURL(req)

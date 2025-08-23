@@ -1,9 +1,9 @@
 import { createClient } from 'gel'
 import { defineNitroPlugin } from 'nitropack/dist/runtime/plugin'
-import { useEdgeDbEnv } from '../composables/useEdgeDbEnv'
+import { useGelEnv } from '../composables/useGelEnv'
 
 export default defineNitroPlugin(() => {
-  const { dsn } = useEdgeDbEnv()
+  const { dsn } = useGelEnv()
 
   const client = createClient({
     dsn: dsn.full,
@@ -11,5 +11,5 @@ export default defineNitroPlugin(() => {
     tlsCA: dsn.tlsCA,
   }) 
 
-  globalThis.__nuxt_edgedb_client__ = client
+  globalThis.__nuxt_gel_client__ = client
 })

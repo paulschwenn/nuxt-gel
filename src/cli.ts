@@ -7,7 +7,7 @@ import chalk from 'chalk'
 const { resolve: resolveProject } = createResolver(process.cwd())
 
 async function up() {
-  p.intro(chalk.bgGreen.blue(` nuxt-edgedb `))
+  p.intro(chalk.bgGreen.blue(` nuxt-gel `))
 
   /**
    * CLI Install detection
@@ -19,7 +19,7 @@ async function up() {
   catch (e) {}
 
   if (!edgedbCliVersion) {
-    const setupEdgeDbCli = await p.select({
+    const setupGelCli = await p.select({
       message: 'Gel CLI not found, do you want to install Gel it?',
       options: [
         { label: 'Yes', value: 'yes', hint: 'recommended' },
@@ -27,7 +27,7 @@ async function up() {
       ],
     })
 
-    if (setupEdgeDbCli === 'yes') {
+    if (setupGelCli === 'yes') {
       const spinner = p.spinner()
 
       try {
@@ -97,7 +97,7 @@ async function up() {
 
   p.log.success('Done. Feel free to checkout the next steps on the README')
 
-  p.log.success('https://github.com/tahul/nuxt-edgedb#readme')
+  p.log.success('https://github.com/veritymedia/nuxt-gel#readme')
 }
 
 up()

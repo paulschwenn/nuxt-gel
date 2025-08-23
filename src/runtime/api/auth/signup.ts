@@ -1,6 +1,6 @@
 import { H3Error, defineEventHandler, readBody, sendError, setHeaders } from 'h3'
-import { useEdgeDbEnv } from '../../server/composables/useEdgeDbEnv'
-import { useEdgeDbPKCE } from '../../server/composables/useEdgeDbPKCE'
+import { useGelEnv } from '../../server/composables/useGelEnv'
+import { useGelPKCE } from '../../server/composables/useGelPKCE'
 
 /**
  * Handles sign up with email and password.
@@ -9,8 +9,8 @@ import { useEdgeDbPKCE } from '../../server/composables/useEdgeDbPKCE'
  * @param {Response} res
  */
 export default defineEventHandler(async (req) => {
-  const pkce = useEdgeDbPKCE()
-  const { urls } = useEdgeDbEnv()
+  const pkce = useGelPKCE()
+  const { urls } = useGelEnv()
   const { authBaseUrl, verifyRedirectUrl } = urls
 
   console.log('🔍 [SIGNUP API] Debug Info:')

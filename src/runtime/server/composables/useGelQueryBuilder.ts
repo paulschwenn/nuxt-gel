@@ -1,7 +1,7 @@
-import e from '#edgedb/builder'
+import e from '#gel/builder'
 
-export type EdgeDbQueryBuilder = typeof e
+export type GelQueryBuilder = typeof e
 
-export function useEdgeDbQueryBuilder(): EdgeDbQueryBuilder {
+export function useGelQueryBuilder(): GelQueryBuilder {
   return e
 }

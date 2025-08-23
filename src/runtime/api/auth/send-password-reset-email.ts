@@ -1,6 +1,6 @@
 import { H3Error, defineEventHandler, readBody, sendError, setHeaders } from 'h3'
-import { useEdgeDbEnv } from '../../server/composables/useEdgeDbEnv'
-import { useEdgeDbPKCE } from '../../server/composables/useEdgeDbPKCE'
+import { useGelEnv } from '../../server/composables/useGelEnv'
+import { useGelPKCE } from '../../server/composables/useGelPKCE'
 
 /**
  * Request a password reset for an email.
@@ -8,8 +8,8 @@ import { useEdgeDbPKCE } from '../../server/composables/useEdgeDbPKCE'
  * @param {Request} req
  */
 export default defineEventHandler(async (req) => {
-  const pkce = useEdgeDbPKCE()
-  const { urls } = useEdgeDbEnv()
+  const pkce = useGelPKCE()
+  const { urls } = useGelEnv()
   const { authBaseUrl, resetPasswordUrl: reset_url } = urls
 
   const { email } = await readBody(req)

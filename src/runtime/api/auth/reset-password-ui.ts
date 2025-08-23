@@ -1,5 +1,5 @@
 import { defineEventHandler, getQuery } from 'h3'
-import { useEdgeDbEnv } from '../../server/composables/useEdgeDbEnv'
+import { useGelEnv } from '../../server/composables/useGelEnv'
 
 /**
  * Render a simple reset password UI
@@ -7,7 +7,7 @@ import { useEdgeDbEnv } from '../../server/composables/useEdgeDbEnv'
  * @param {Request} req
  */
 export default defineEventHandler((req) => {
-  const { urls } = useEdgeDbEnv()
+  const { urls } = useGelEnv()
   const { authBaseUrl } = urls
   const { reset_token } = getQuery(req)
 

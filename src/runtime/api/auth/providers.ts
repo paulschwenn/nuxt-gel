@@ -1,8 +1,8 @@
 import { defineEventHandler } from 'h3'
-import { useEdgeDb } from '../../server/composables/useEdgeDb'
+import { useGel } from '../../server/composables/useGel'
 
 export default defineEventHandler(async () => {
-  const client = useEdgeDb()
+  const client = useGel()
 
   const result = await client.query(`
     select cfg::Config.extensions[is ext::auth::AuthConfig].providers {

@@ -1,10 +1,10 @@
 import { H3Error, defineEventHandler, readBody, sendError, setCookie } from 'h3'
-import { useEdgeDbEnv } from '../../server/composables/useEdgeDbEnv'
-import { useEdgeDbPKCE } from '../../server/composables/useEdgeDbPKCE'
+import { useGelEnv } from '../../server/composables/useGelEnv'
+import { useGelPKCE } from '../../server/composables/useGelPKCE'
 
 export default defineEventHandler(async (req) => {
-  const pkce = useEdgeDbPKCE()
-  const { urls } = useEdgeDbEnv()
+  const pkce = useGelPKCE()
+  const { urls } = useGelEnv()
   const { authBaseUrl } = urls
 
   console.log('🔍 [LOGIN API] Debug Info:')
@@ -57,7 +57,7 @@ export default defineEventHandler(async (req) => {
 
   const tokenResponseData = await tokenResponse.json()
 
-  setCookie(req, 'edgedb-auth-token', tokenResponseData.auth_token, {
+  setCookie(req, 'gel-auth-token', tokenResponseData.auth_token, {
     httpOnly: true,
     path: '/',
     secure: true,

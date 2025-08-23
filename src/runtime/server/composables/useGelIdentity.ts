@@ -1,6 +1,6 @@
 import type { EventHandlerRequest, H3Event } from 'h3'
 import { getCookie, sendRedirect, setCookie } from 'h3'
-import { useEdgeDb } from './useEdgeDb'
+import { useGel } from './useGel'
 
 interface UseGelIdentityData<T = any> {
   identity: T
@@ -13,7 +13,7 @@ interface UseGelIdentityData<T = any> {
 export async function useGelIdentity<T>(
   req: H3Event<EventHandlerRequest> | undefined = undefined,
 ): Promise<UseGelIdentityData<T>> {
-  const client = useEdgeDb(req)
+  const client = useGel(req)
 
   let token: string | undefined
 
@@ -21,7 +21,7 @@ export async function useGelIdentity<T>(
 
   const update = async () => {
     if (req)
-      token = getCookie(req, 'edgedb-auth-token')
+      token = getCookie(req, 'gel-auth-token')
 
     user = client.querySingle(`select global current_user;`) as T
   }
@@ -30,7 +30,7 @@ export async function useGelIdentity<T>(
     if (!req)
       return
 
-    setCookie(req, 'edgedb-auth-token', '')
+    setCookie(req, 'gel-auth-token', '')
 
     if (redirectTo)
       return sendRedirect(req, '/')

@@ -1,6 +1,6 @@
 import type { ComputedRef, Ref } from 'vue'
 import type { H3Event } from 'h3'
-import type { User } from '#edgedb/interfaces'
+import type { User } from '#gel/interfaces'
 import { useNuxtApp } from '#imports'
 
 interface UseGelIdentityData {
@@ -13,11 +13,11 @@ interface UseGelIdentityData {
 
 export function useGelIdentity(): UseGelIdentityData {
   const {
-    $edgeDbIdentity: identity,
-    $edgeDbCookie: cookie,
-    $edgeDbUpdateIdentity: update,
-    $edgeDbLogout: logout,
-    $edgeDbIsLoggedIn: isLoggedIn,
+    $gelIdentity: identity,
+    $gelCookie: cookie,
+    $gelUpdateIdentity: update,
+    $gelLogout: logout,
+    $gelIsLoggedIn: isLoggedIn,
   } = useNuxtApp()
 
   const identityData = {

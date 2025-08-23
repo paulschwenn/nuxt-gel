@@ -5,7 +5,7 @@ export async function getGelCredentials(
   cwd: string,
   processInject: boolean = true,
 ) {
-  console.log('🔍 [getEdgeDbCredentials] Debug Info:')
+      console.log('🔍 [getGelCredentials] Debug Info:')
   console.log('  - cwd parameter:', cwd)
   console.log('  - process.cwd():', process.cwd())
   console.log('  - processInject:', processInject)
@@ -18,7 +18,7 @@ export async function getGelCredentials(
     console.log('  - Command succeeded, stdout:', dbCredentials.stdout)
   }
   catch (e: any) {
-    console.log("❌ [getEdgeDbCredentials] Error getting Gel instance credentials:", e)
+    console.log("❌ [getGelCredentials] Error getting Gel instance credentials:", e)
     console.log("  - Error details:", {
       command: e.command,
       cwd: e.cwd,
@@ -61,7 +61,7 @@ export async function getGelConfiguration(
   cwd: string = process.cwd(),
   processInject: boolean = true,
 ) {
-  console.log('🔍 [getEdgeDbConfiguration] Debug Info:')
+      console.log('🔍 [getGelConfiguration] Debug Info:')
   console.log('  - appUrl:', appUrl)
   console.log('  - cwd parameter:', cwd)
   console.log('  - processInject:', processInject)

@@ -7,7 +7,7 @@ import crypto from 'node:crypto'
  *
  * @returns {object} The verifier and challenge strings
  */
-export function useEdgeDbPKCE() {
+export function useGelPKCE() {
   const verifier = crypto.randomBytes(32).toString('base64url')
 
   const challenge = crypto

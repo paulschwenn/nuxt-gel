@@ -1,7 +1,7 @@
 import { useRuntimeConfig } from '#imports'
 
-export function useEdgeDbEnv() {
-  const { edgeDb } = useRuntimeConfig()
+export function useGelEnv() {
+  const { gel } = useRuntimeConfig()
 
-  return edgeDb
+  return gel
 }

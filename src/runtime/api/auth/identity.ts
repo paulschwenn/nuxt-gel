@@ -1,18 +1,18 @@
 import { defineEventHandler, deleteCookie, getCookie, setCookie } from 'h3'
-import { useEdgeDbEnv } from '../../server/composables/useEdgeDbEnv'
-import { useEdgeDb } from '../../server/composables/useEdgeDb'
+import { useGelEnv } from '../../server/composables/useGelEnv'
+import { useGel } from '../../server/composables/useGel'
 
 export default defineEventHandler(async (event) => {
-  const { auth } = useEdgeDbEnv()
+  const { auth } = useGelEnv()
 
-  const token = getCookie(event, 'edgedb-auth-token')
+  const token = getCookie(event, 'gel-auth-token')
 
   if (!token) {
     deleteCookie(event, 'edgedb-auth-token')
     return
   }
 
-  const client = useEdgeDb(event) 
+  const client = useGel(event) 
 
   try {
     let identityTarget = await client.querySingle(`select global current_user;`)

@@ -1,6 +1,6 @@
 import { H3Error, defineEventHandler, getCookie, getRequestURL, sendError, setHeaders } from 'h3'
 import { useNitroApp } from 'nitropack/runtime'
-import { useEdgeDbEnv } from '../../server/composables/useEdgeDbEnv'
+import { useGelEnv } from '../../server/composables/useGelEnv'
 
 /**
  * Handles the PKCE callback and exchanges the `code` and `verifier`
@@ -9,7 +9,7 @@ import { useEdgeDbEnv } from '../../server/composables/useEdgeDbEnv'
  * @param {Request} req
  */
 export default defineEventHandler(async (req) => {
-  const { urls } = useEdgeDbEnv()
+  const { urls } = useGelEnv()
   const { authBaseUrl } = urls
 
   const requestUrl = getRequestURL(req)
