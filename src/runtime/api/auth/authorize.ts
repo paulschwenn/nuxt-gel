@@ -3,7 +3,7 @@ import { useGelEnv } from '../../server/composables/useGelEnv'
 import { useGelPKCE } from '../../server/composables/useGelPKCE'
 
 /**
- * Redirects OAuth requests to EdgeDB Auth OAuth authorize redirect
+ * Redirects OAuth requests to Gel Auth OAuth authorize redirect
  * with the PKCE challenge, and saves PKCE verifier in an HttpOnly
  * cookie for later retrieval.
  *

@@ -2,7 +2,7 @@ import { H3Error, defineEventHandler, getCookie, readBody, sendError, setHeaders
 import { useGelEnv } from '../../server/composables/useGelEnv'
 
 /**
- * Send new password with reset token to EdgeDB Auth.
+ * Send new password with reset token to Gel Auth.
  *
  * @param {Request} req
  */

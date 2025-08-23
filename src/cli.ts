@@ -12,13 +12,13 @@ async function up() {
   /**
    * CLI Install detection
    */
-  let edgedbCliVersion: string | undefined
+  let gelCliVersion: string | undefined
   try {
-    edgedbCliVersion = await execa.execa(`gel`, [`--version`], { cwd: resolveProject() }).then(result => result.stdout.replace('Gel CLI ', ''))
+    gelCliVersion = await execa.execa(`gel`, [`--version`], { cwd: resolveProject() }).then(result => result.stdout.replace('Gel CLI ', ''))
   }
   catch (e) {}
 
-  if (!edgedbCliVersion) {
+  if (!gelCliVersion) {
     const setupGelCli = await p.select({
       message: 'Gel CLI not found, do you want to install Gel it?',
       options: [
@@ -33,8 +33,8 @@ async function up() {
       try {
         spinner.start('Installing Gel CLI...')
         await execa.$`curl https://www.geldata.com/sh --proto "=https" -sSf1 | sh`
-        edgedbCliVersion = await execa.execa(`gel`, ['--version'], { cwd: resolveProject() }).then(result => result.stdout.replace('Gel CLI ', ''))
-        spinner.stop(`Gel CLI version ${edgedbCliVersion} installed.`)
+        gelCliVersion = await execa.execa(`gel`, ['--version'], { cwd: resolveProject() }).then(result => result.stdout.replace('Gel CLI ', ''))
+        spinner.stop(`Gel CLI version ${gelCliVersion} installed.`)
       }
       catch (e) {
         spinner.stop('Failed to install Gel CLI.')
@@ -42,12 +42,12 @@ async function up() {
       } 
     }
 
-    if (!edgedbCliVersion) {
+    if (!gelCliVersion) {
       process.exit(0)
     }
   }
   else {
-    p.log.success(`Gel CLI version ${chalk.blue(edgedbCliVersion)} found.`)
+    p.log.success(`Gel CLI version ${chalk.blue(gelCliVersion)} found.`)
   }
 
   const groupData = await p.group(

@@ -49,7 +49,7 @@ export default defineEventHandler(async (req) => {
 
   if (!registerResponse.ok) {
     const errorText = await registerResponse.text()
-    console.log('🔍 [SIGNUP API] EdgeDB Auth Server Error:')
+    console.log('🔍 [SIGNUP API] Gel Auth Server Error:')
     console.log('  - Status:', registerResponse.status)
     console.log('  - Status Text:', registerResponse.statusText)
     console.log('  - Response Body:', errorText)
