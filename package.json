@@ -47,7 +47,7 @@
     "dev:watch:module": "chokidar \"src/**/*\" -c \"pnpm run dev:build:module\"",
     "dev:build:module": "nuxt-module-build build --stub && nuxt-module-build prepare",
     "dev:playground": "cd playground && pnpm dev",
-    "release": "npm run lint && npm run build && changelogen --release && npm publish && git push --follow-tags",
+    "release": "npm run lint && npm run build && npm publish && git push --follow-tags",
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest watch"
