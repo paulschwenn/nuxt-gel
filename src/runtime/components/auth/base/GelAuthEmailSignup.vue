@@ -9,13 +9,13 @@ const props = withDefaults(
   },
 )
 
-const email = ref('default@test.com')
+const email = ref('')
 function updateEmail(value: string) {
   email.value = value
 }
-const password = ref('test1234')
+const password = ref('')
 function updatePassword(value: string) {
-  console.log('updatePassword', value)
+  // console.log('updatePassword', value)
   password.value = value
 }
 const error = ref()
