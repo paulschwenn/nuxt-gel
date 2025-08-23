@@ -58,6 +58,8 @@ Temporary Items
 # Asdf
 .tool-versions
 
+gel.toml
+dbschema/
 # Gel
 **/*.edgeql.ts
 **/dbschema/queries.*
