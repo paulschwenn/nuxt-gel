@@ -6,7 +6,7 @@ const title = ref()
 const description = ref()
 const content = ref()
 const router = useRouter()
-const { isLoggedIn } = useEdgeDbIdentity()
+const { isLoggedIn } = useGelIdentity()
 
 let timeout: undefined | NodeJS.Timeout
 

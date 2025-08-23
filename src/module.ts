@@ -250,8 +250,8 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
       })
       addImports([
         {
-          from: resolveLocal('./runtime/composables/useEdgeDbIdentity'),
-          name: 'useEdgeDbIdentity',
+          from: resolveLocal('./runtime/composables/useGelIdentity'),
+          name: 'useGelIdentity',
         },
       ])
 

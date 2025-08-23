@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useEdgeDbIdentity } from '../../../composables/useEdgeDbIdentity'
+import { useGelIdentity } from '../../../composables/useGelIdentity'
 import { navigateTo, useRouter } from '#imports'
 
 const props = withDefaults(
@@ -26,7 +26,7 @@ async function check() {
       method: 'POST',
     })
 
-    const { update } = useEdgeDbIdentity()
+    const { update } = useGelIdentity()
 
     await update()
 

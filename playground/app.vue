@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { isLoggedIn } = useEdgeDbIdentity()
+const { isLoggedIn } = useGelIdentity()
 
 const links = computed(() => {
   const links = [

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { BlogPost } from '#edgedb/interfaces'
 
-const { isLoggedIn } = useEdgeDbIdentity()
+const { isLoggedIn } = useGelIdentity()
 
 const { data, refresh } = await useAsyncData<BlogPost[]>(
   'blogpost-index',

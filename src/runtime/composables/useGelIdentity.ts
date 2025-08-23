@@ -3,7 +3,7 @@ import type { H3Event } from 'h3'
 import type { User } from '#edgedb/interfaces'
 import { useNuxtApp } from '#imports'
 
-interface UseEdgeDbIdentityData {
+interface UseGelIdentityData {
   identity: Ref<User>
   cookie: Ref<string>
   update: (event?: H3Event) => Promise<void>
@@ -11,7 +11,7 @@ interface UseEdgeDbIdentityData {
   isLoggedIn: ComputedRef<boolean>
 }
 
-export function useEdgeDbIdentity(): UseEdgeDbIdentityData {
+export function useGelIdentity(): UseGelIdentityData {
   const {
     $edgeDbIdentity: identity,
     $edgeDbCookie: cookie,
@@ -26,7 +26,7 @@ export function useEdgeDbIdentity(): UseEdgeDbIdentityData {
     cookie,
     update,
     logout,
-  } as UseEdgeDbIdentityData
+  } as UseGelIdentityData
 
   return identityData
 }

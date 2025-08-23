@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { navigateTo, useEdgeDbIdentity } from '#imports'
+import { navigateTo, useGelIdentity } from '#imports'
 
 const props = withDefaults(
   defineProps<{ redirectTo?: string }>(),
@@ -35,7 +35,7 @@ async function submit(provider: string = 'builtin::local_emailpassword') {
       },
     })
 
-    const { update } = useEdgeDbIdentity()
+    const { update } = useGelIdentity()
 
     await update()
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useEdgeDbIdentity } from '../../../composables/useEdgeDbIdentity'
+import { useGelIdentity } from '../../../composables/useGelIdentity'
 
 const props = withDefaults(
   defineProps<{
@@ -8,12 +8,12 @@ const props = withDefaults(
   }>(),
   {
     redirectTo: '/',
-    logoutOnSetup: true,
+    logoutOnSetup: true, 
   },
 )
 
 async function logout(redirectTo: string = props.redirectTo) {
-  const { logout: identityLogout } = useEdgeDbIdentity()
+  const { logout: identityLogout } = useGelIdentity()
   await identityLogout(redirectTo)
 }
 
