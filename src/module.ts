@@ -45,17 +45,17 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
     identityModel: 'User',
   },
   async setup(options, nuxt) {
-    console.log('🔍 [MODULE SETUP] Debug Info:')
-    console.log('  - nuxt.options.rootDir:', nuxt.options.rootDir)
-    console.log('  - process.cwd():', process.cwd())
-    console.log('  - options.dbschemaDir:', options.dbschemaDir)
-    console.log('  - options:', JSON.stringify(options, null, 2))
+    // console.log('🔍 [MODULE SETUP] Debug Info:')
+    // console.log('  - nuxt.options.rootDir:', nuxt.options.rootDir)
+    // console.log('  - process.cwd():', process.cwd())
+    // console.log('  - options.dbschemaDir:', options.dbschemaDir)
+    // console.log('  - options:', JSON.stringify(options, null, 2))
 
     const { resolve: resolveProject } = createResolver(nuxt.options.rootDir)
     const dbschemaDir = resolveProject(options.dbschemaDir)
 
-    console.log('  - resolveProject result:', resolveProject())
-    console.log('  - dbschemaDir resolved:', dbschemaDir)
+    // console.log('  - resolveProject result:', resolveProject())
+    // console.log('  - dbschemaDir resolved:', dbschemaDir)
 
     const canPrompt = nuxt.options.dev
 
@@ -75,8 +75,8 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
 
     const appUrl = envAppUrl || devAppUrl
 
-    console.log('  - appUrl:', appUrl)
-    console.log('  - About to set basic runtime config (no Gel operations)')
+    // console.log('  - appUrl:', appUrl)
+    // console.log('  - About to set basic runtime config (no Gel operations)')
 
     // Inject runtime configuration
     nuxt.options.runtimeConfig.gel ??= await getGelConfiguration(appUrl, options, nuxt.options.rootDir, options.injectDbCredentials) as any

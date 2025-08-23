@@ -5,20 +5,20 @@ export async function getGelCredentials(
   cwd: string,
   processInject: boolean = true,
 ) {
-  console.log('🔍 [getGelCredentials] Debug Info:')
-  console.log('  - cwd parameter:', cwd)
-  console.log('  - process.cwd():', process.cwd())
-  console.log('  - processInject:', processInject)
+  // console.log('🔍 [getGelCredentials] Debug Info:')
+  // console.log('  - cwd parameter:', cwd)
+  // console.log('  - process.cwd():', process.cwd())
+  // console.log('  - processInject:', processInject)
 
   let dbCredentials: any | undefined
 
   try {
-    console.log('  - About to run: gel instance credentials --json in cwd:', cwd)
+    // console.log('  - About to run: gel instance credentials --json in cwd:', cwd)
     dbCredentials = await execa('gel', ['instance', 'credentials', '--json'], { cwd })
-    console.log('  - Command succeeded, stdout:', dbCredentials.stdout)
+    // console.log('  - Command succeeded, stdout:', dbCredentials.stdout)
   }
   catch (e: any) {
-    console.log('❌ [getGelCredentials] Error getting Gel instance credentials:', e)
+    // console.log('❌ [getGelCredentials] Error getting Gel instance credentials:', e)
     console.log('  - Error details:', {
       command: e.command,
       cwd: e.cwd,
@@ -61,11 +61,11 @@ export async function getGelConfiguration(
   cwd: string = process.cwd(),
   processInject: boolean = true,
 ) {
-  console.log('🔍 [getGelConfiguration] Debug Info:')
-  console.log('  - appUrl:', appUrl)
-  console.log('  - cwd parameter:', cwd)
-  console.log('  - processInject:', processInject)
-  console.log('  - options:', JSON.stringify(options, null, 2))
+  // console.log('🔍 [getGelConfiguration] Debug Info:')
+  // console.log('  - appUrl:', appUrl)
+  // console.log('  - cwd parameter:', cwd)
+  // console.log('  - processInject:', processInject)
+  // console.log('  - options:', JSON.stringify(options, null, 2))
 
   await getGelCredentials(cwd, processInject)
 
