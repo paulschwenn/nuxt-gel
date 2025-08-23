@@ -9,11 +9,11 @@ const props = withDefaults(
   },
 )
 
-const email = ref()
+const email = ref('')
 function updateEmail(value: string) {
   email.value = value
 }
-const password = ref()
+const password = ref('')
 function updatePassword(value: string) {
   password.value = value
 }

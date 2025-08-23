@@ -28,7 +28,7 @@ export async function getEdgeDbCredentials(
   }
 
   if (dbCredentials) {
-    const { host, port, database, user, password, tls_ca, tls_security } = JSON.parse(dbCredentials.stdout)
+    const { host, port, database, user, password, tls_ca, tls_security, branch } = JSON.parse(dbCredentials.stdout)
 
     if (processInject) {
       if (!process.env.NUXT_GEL_HOST)
@@ -37,6 +37,8 @@ export async function getEdgeDbCredentials(
         process.env.NUXT_GEL_PORT = port
       if (!process.env.NUXT_GEL_DATABASE)
         process.env.NUXT_GEL_DATABASE = database
+      if (!process.env.NUXT_GEL_BRANCH)
+        process.env.NUXT_GEL_BRANCH = branch || database // use branch if available, fallback to database
       if (!process.env.NUXT_GEL_USER)
         process.env.NUXT_GEL_USER = user
       if (!process.env.NUXT_GEL_PASS)
@@ -46,7 +48,7 @@ export async function getEdgeDbCredentials(
       if (!process.env.NUXT_GEL_TLS_SECURITY)
         process.env.NUXT_GEL_TLS_SECURITY = tls_security
       if (!process.env.NUXT_GEL_AUTH_BASE_URL)
-        process.env.NUXT_GEL_AUTH_BASE_URL = `http://${host}:${port}/branch/${database}/ext/auth/`
+        process.env.NUXT_GEL_AUTH_BASE_URL = `http://${host}:${port}/branch/${branch || database}/ext/auth/`
     }
 
     return { host, port, database, user, password, tls_ca, tls_security }
@@ -74,15 +76,16 @@ export async function getEdgeDbConfiguration(
     NUXT_GEL_USER: user,
     NUXT_GEL_PASS: pass,
     NUXT_GEL_DATABASE: database,
+    NUXT_GEL_BRANCH: branch,
     NUXT_GEL_TLS_CA: tlsCA,
     NUXT_GEL_TLS_SECURITY: tlsSecurity,
 
     // Gel Auth settings
     NUXT_GEL_IDENTITY_MODEL: identityModel = options?.identityModel || 'User',
-
+ 
     // Gel Auth URls
-    NUXT_GEL_AUTH_BASE_URL: authBaseUrl = `http://${host}:${port}/branch/${database}/ext/auth/`,
-    NUXT_GEL_OAUTH_CALLBACK: oAuthCallbackUrl = `http://${host}:${port}/branch/${database}/ext/auth/callback`,
+    NUXT_GEL_AUTH_BASE_URL: authBaseUrl = `http://${host}:${port}/branch/${branch || database}/ext/auth/`,
+    NUXT_GEL_OAUTH_CALLBACK: oAuthCallbackUrl = `http://${host}:${port}/branch/${branch || database}/ext/auth/callback`,
 
     // Gel Nuxt Auth URLs
     NUXT_GEL_AUTH_VERIFY_REDIRECT_URL: verifyRedirectUrl = `${appUrl}/auth/verify`,

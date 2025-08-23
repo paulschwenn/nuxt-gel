@@ -13,7 +13,18 @@ export default defineEventHandler(async (req) => {
   const { urls } = useEdgeDbEnv()
   const { authBaseUrl, verifyRedirectUrl } = urls
 
+  console.log('🔍 [SIGNUP API] Debug Info:')
+  console.log('  - urls:', urls)
+  console.log('  - authBaseUrl:', authBaseUrl)
+  console.log('  - verifyRedirectUrl:', verifyRedirectUrl)
+  console.log('  - pkce.challenge:', pkce.challenge)
+
   const { email, password, provider } = await readBody(req)
+
+  console.log('🔍 [SIGNUP API] Request Body:')
+  console.log('  - email:', email)
+  console.log('  - password:', password ? '[PRESENT]' : '[MISSING]')
+  console.log('  - provider:', provider)
 
   if (!email || !password || !provider) {
     const err = new H3Error(`Request body malformed. Expected JSON body with 'email', 'password', and 'provider' keys, but got: ${Object.entries({ email, password, provider }).filter(([, v]) => !!v)}`)
@@ -37,7 +48,21 @@ export default defineEventHandler(async (req) => {
   })
 
   if (!registerResponse.ok) {
-    const err = new H3Error(`Error from auth server: ${await registerResponse.text()}`)
+    const errorText = await registerResponse.text()
+    console.log('🔍 [SIGNUP API] EdgeDB Auth Server Error:')
+    console.log('  - Status:', registerResponse.status)
+    console.log('  - Status Text:', registerResponse.statusText)
+    console.log('  - Response Body:', errorText)
+    console.log('  - Request URL:', registerUrl.href)
+    console.log('  - Request Body:', JSON.stringify({
+      challenge: pkce.challenge,
+      email,
+      provider,
+      password: '[REDACTED]',
+      verify_url: verifyRedirectUrl,
+    }))
+    
+    const err = new H3Error(`Error from auth server: ${errorText}`)
     err.statusCode = 400
     return sendError(req, err)
   }

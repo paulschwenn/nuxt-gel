@@ -79,18 +79,18 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
     console.log('  - About to set basic runtime config (no Gel operations)')
 
     // Inject runtime configuration
-    // nuxt.options.runtimeConfig.edgeDb ??= await getEdgeDbConfiguration(appUrl, options, nuxt.options.rootDir, options.injectDbCredentials) as any
+    nuxt.options.runtimeConfig.edgeDb ??= await getEdgeDbConfiguration(appUrl, options, nuxt.options.rootDir, options.injectDbCredentials) as any
 
     // Set basic runtime configuration at build time (no Gel operations)
-    nuxt.options.runtimeConfig.edgeDb ??= {
-      auth: { 
-        enabled: options?.auth || false, 
-        oauth: options?.oauth || false, 
-        identityModel: options?.identityModel || 'User' 
-      },
-      dsn: {},
-      urls: { appUrl }
-    }
+    // nuxt.options.runtimeConfig.edgeDb ??= {
+    //   auth: { 
+    //     enabled: options?.auth || false, 
+    //     oauth: options?.oauth || false, 
+    //     identityModel: options?.identityModel || 'User' 
+    //   },
+    //   dsn: {},
+    //   urls: { appUrl }
+    // }
 
     // Defer Gel configuration to runtime via a plugin
     if (options.injectDbCredentials) {

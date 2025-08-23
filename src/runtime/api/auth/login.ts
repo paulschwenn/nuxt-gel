@@ -7,6 +7,11 @@ export default defineEventHandler(async (req) => {
   const { urls } = useEdgeDbEnv()
   const { authBaseUrl } = urls
 
+  console.log('🔍 [LOGIN API] Debug Info:')
+  console.log('  - urls:', urls)
+  console.log('  - authBaseUrl:', authBaseUrl)
+  console.log('  - pkce.challenge:', pkce.challenge)
+
   const { email, password, provider } = await readBody(req)
 
   if (!email || !password || !provider) {

@@ -11,21 +11,23 @@
 
         <div class="flex flex-col gap-4">
           <UFormGroup label="Email">
-            <UInput
+            <input
               type="email"
               :value="email"
               placeholder="your@email.com"
-              @change="(e: any) => updateEmail(e.target.value)"
+              @input="(e) => updateEmail(e.target.value)"
               @keyup.enter="() => submit()"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </UFormGroup>
           <UFormGroup label="Password">
-            <UInput
+            <input
               type="password"
               :value="password"
               placeholder="password"
-              @change="(e: any) => updatePassword(e.target.value)"
+              @input="(e) => updatePassword(e.target.value)"
               @keyup.enter="() => submit()"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </UFormGroup>
         </div>

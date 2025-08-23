@@ -9,12 +9,13 @@ const props = withDefaults(
   },
 )
 
-const email = ref()
+const email = ref('default@test.com')
 function updateEmail(value: string) {
   email.value = value
 }
-const password = ref()
+const password = ref('test1234')
 function updatePassword(value: string) {
+  console.log('updatePassword', value)
   password.value = value
 }
 const error = ref()
@@ -26,6 +27,8 @@ async function submit(provider: string = 'builtin::local_emailpassword') {
   success.value = undefined
   loading.value = true
   try {
+    // const msg =`/api/auth/signup  ${password.value} ${email.value}` 
+    // alert(msg)
     const result = await $fetch('/api/auth/signup', {
       method: 'POST',
       body: {

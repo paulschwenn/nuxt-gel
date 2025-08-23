@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     return
   }
 
-  const client = useEdgeDb(event)
+  const client = useEdgeDb(event) 
 
   try {
     let identityTarget = await client.querySingle(`select global current_user;`)
