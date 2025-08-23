@@ -32,7 +32,7 @@ defineExpose({
 })
 
 await useAsyncData(
-  'edgedb-oauth-providers',
+  'gel-oauth-providers',
   async () => await getProviders(),
 )
 </script>

@@ -1,7 +1,7 @@
 import { H3Error, defineEventHandler, getCookie, sendError, setCookie } from 'h3'
 
 export default defineEventHandler(async (req) => {
-  const authToken = getCookie(req, 'edgedb-auth-token')
+  const authToken = getCookie(req, 'gel-auth-token')
 
   if (!authToken) {
     const err = new H3Error('Not logged in')
@@ -11,7 +11,7 @@ export default defineEventHandler(async (req) => {
 
   setCookie(
     req,
-    'edgedb-auth-token',
+    'gel-auth-token',
     '',
     {
       httpOnly: true,

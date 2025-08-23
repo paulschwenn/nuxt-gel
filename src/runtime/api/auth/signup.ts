@@ -70,7 +70,7 @@ export default defineEventHandler(async (req) => {
   const registerResponseData = await registerResponse.json()
 
   setHeaders(req, {
-    'Set-Cookie': `edgedb-pkce-verifier=${pkce.verifier}; HttpOnly; Path=/; Secure; SameSite=Strict`,
+    'Set-Cookie': `gel-pkce-verifier=${pkce.verifier}; HttpOnly; Path=/; Secure; SameSite=Strict`,
   })
 
   return registerResponseData

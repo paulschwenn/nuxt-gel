@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
   const token = getCookie(event, 'gel-auth-token')
 
   if (!token) {
-    deleteCookie(event, 'edgedb-auth-token')
+    deleteCookie(event, 'gel-auth-token')
     return
   }
 
@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
   catch (err) {
     setCookie(
       event,
-      'edgedb-auth-token',
+      'gel-auth-token',
       '',
       {
         httpOnly: true,

@@ -30,7 +30,7 @@ export default defineEventHandler(async (req) => {
   setHeaders(
     req,
     {
-      'Set-Cookie': `edgedb-pkce-verifier=${pkce.verifier}; HttpOnly; Path=/; Secure; SameSite=Strict`,
+      'Set-Cookie': `gel-pkce-verifier=${pkce.verifier}; HttpOnly; Path=/; Secure; SameSite=Strict`,
     },
   )
 

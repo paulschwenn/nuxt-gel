@@ -11,7 +11,6 @@ export default defineBuildConfig({
     'pathe',
     'chalk',
     'prompts',
-    'edgedb',
     'gel',
     '@gel/generate',
   ],

@@ -21,7 +21,7 @@ export default defineEventHandler(async (req) => {
     return sendError(req, err)
   }
 
-  const verifier = getCookie(req, 'edgedb-pkce-verifier')
+  const verifier = getCookie(req, 'gel-pkce-verifier')
   if (!verifier) {
     const err = new H3Error(`Could not find 'verifier' in the cookie store. Is this the same user agent/browser that started the authorization flow?`)
     err.statusCode = 400
@@ -54,6 +54,6 @@ export default defineEventHandler(async (req) => {
   )
 
   setHeaders(req, {
-    'Set-Cookie': `edgedb-auth-token=${codeExchangeResponseData.auth_token}; Path=/; HttpOnly`,
+    'Set-Cookie': `gel-auth-token=${codeExchangeResponseData.auth_token}; Path=/; HttpOnly`,
   })
 })
