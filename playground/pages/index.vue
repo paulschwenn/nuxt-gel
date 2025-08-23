@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { BlogPost } from '#edgedb/interfaces'
+import type { BlogPost } from '#gel/interfaces'
 
 const { isLoggedIn } = useGelIdentity()
 

@@ -8,6 +8,6 @@
           <h2>Logout</h2>
         </template>
       </UCard>
-    </edgedbauthlogout>
+    </GelAuthLogout>
   </div>
 </template>

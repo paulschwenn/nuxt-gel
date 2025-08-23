@@ -4,7 +4,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
   ],
   rootDir: '.',
-  edgeDb: {
+  gel: {
     auth: true,
     oauth: true,
     dbschemaDir: 'dbschema/',
