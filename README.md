@@ -7,6 +7,12 @@
 [![License][license-src]][license-href]
 [![Nuxt][nuxt-src]][nuxt-href]
 
+> **Note**: This is a fork of [nuxt-edgedb-module](https://github.com/tahul/nuxt-edgedb) that has been updated for compatibility with Gel 6+ (formerly EdgeDB). The original module hasn't been updated for over a year and was only compatible with EdgeDB 4.
+>
+> **Thank you** to [@tahul](https://github.com/tahul) for creating the original nuxt-edgedb-module that this project is based on!
+>
+> **⚠️ Compatibility**: Currently tested with Gel 6+ and Nuxt 3. Nuxt 4 compatibility coming soon. There may be bugs as this is a work in progress.
+
 Integrate [Nuxt 3](https://nuxt.com) with [Gel](https://www.geldata.com) effortlessly, adding a robust database layer to your app with minimal configuration.
 
 ## Features
