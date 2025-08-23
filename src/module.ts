@@ -83,26 +83,27 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
       auth: {
         enabled: options?.auth || false,
         oauth: options?.oauth || false,
-        identityModel: options?.identityModel || 'User'
+        identityModel: options?.identityModel || 'User',
       },
       dsn: {},
-      urls: { appUrl }
+      urls: { appUrl },
     }
-    
+
     // Try to get Gel configuration if injectDbCredentials is enabled
     if (options.injectDbCredentials) {
       try {
         const gelConfig = await getGelConfiguration(appUrl, options, nuxt.options.rootDir, options.injectDbCredentials)
         if (gelConfig) {
           const currentGel = nuxt.options.runtimeConfig.gel as any
-          nuxt.options.runtimeConfig.gel = { 
-            ...currentGel, 
+          nuxt.options.runtimeConfig.gel = {
+            ...currentGel,
             auth: { ...currentGel.auth, ...gelConfig.auth },
             dsn: { ...currentGel.dsn, ...gelConfig.dsn },
-            urls: { ...currentGel.urls, ...gelConfig.urls }
+            urls: { ...currentGel.urls, ...gelConfig.urls },
           }
         }
-      } catch (error) {
+      }
+      catch (error) {
         console.warn('⚠️ [Gel Module] Failed to get Gel configuration at build time:', error)
         // Continue with basic config, plugin will handle runtime configuration
       }

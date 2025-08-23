@@ -1,21 +1,21 @@
 import { defineNitroPlugin } from 'nitropack/dist/runtime/plugin'
-import { useRuntimeConfig } from '#imports'
 import { getGelConfiguration } from '../../../utils'
+import { useRuntimeConfig } from '#imports'
 
 export default defineNitroPlugin(async () => {
   try {
     // Wait a bit for runtime config to be available
     await new Promise(resolve => setTimeout(resolve, 100))
-    
+
     // Get the Nuxt runtime config
     const config = useRuntimeConfig()
-    
+
     // Ensure gel config exists and has required structure
     if (!config || !config.gel) {
       console.warn('⚠️ [Gel Config] Gel runtime config not available yet')
       return
     }
-    
+
     // Initialize gel config structure if missing
     if (!config.gel.dsn) {
       config.gel.dsn = {}
@@ -54,7 +54,8 @@ export default defineNitroPlugin(async () => {
         // Don't fail the app startup, just log the warning
       }
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error('❌ [Gel Config] Critical error in Gel configuration plugin:', error)
   }
 })
