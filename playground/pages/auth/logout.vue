@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <EdgeDbAuthLogout
+    <GelAuthLogout
       redirect-to="/"
     >
       <UCard>

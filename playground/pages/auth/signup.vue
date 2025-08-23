@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <EdgeDbAuthEmailSignup
+    <GelAuthEmailSignup
       v-slot="{ email, updateEmail, password, updatePassword, submit, loading }"
       redirect-to="/"
     >
@@ -45,6 +45,6 @@
           </div>
         </template>
       </UCard>
-    </EdgeDbAuthEmailSignup>
+    </GelAuthEmailSignup>
   </div>
 </template>

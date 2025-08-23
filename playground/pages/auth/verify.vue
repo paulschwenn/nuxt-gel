@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <EdgeDbAuthEmailVerify
+    <GelAuthEmailVerify
       v-slot="{ loading }"
       redirect-to="/"
     >
@@ -12,6 +12,6 @@
           Loading...
         </UButton>
       </UCard>
-    </EdgeDbAuthEmailVerify>
+    </GelAuthEmailVerify>
   </div>
 </template>

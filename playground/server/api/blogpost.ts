@@ -1,8 +1,8 @@
 import { defineEventHandler, getQuery, isMethod, readBody } from 'h3'
-import type { BlogPost } from '#edgedb/interfaces'
+import type { BlogPost } from '#gel/interfaces'
 
 export default defineEventHandler(async (req) => {
-  const { insertBlogPost, allBlogPosts, deleteBlogPost, getBlogPost } = useEdgeDbQueries(req)
+  const { insertBlogPost, allBlogPosts, deleteBlogPost, getBlogPost } = useGelQueries(req)
   const query = getQuery(req)
   const id = query?.id as string | undefined
 
@@ -25,7 +25,7 @@ export default defineEventHandler(async (req) => {
       return blogpost as BlogPost
     }
 
-    const count = await useEdgeDb().query('select count(BlogPost);').then(count => count?.[0] || 0)
+    const count = await useGel().query('select count(BlogPost);').then(count => count?.[0] || 0)
 
     return count ? await allBlogPosts() : []
   }

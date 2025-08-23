@@ -1,6 +1,6 @@
 <template>
-  <EdgeDbAuthProviders v-slot="{ oAuthProviders: providers }">
-    <EdgeDbOAuthButton
+  <GelAuthProviders v-slot="{ oAuthProviders: providers }">
+<GelOAuthButton
       v-for="provider of providers"
       :key="provider.name"
       v-slot="{ redirect }"
@@ -9,6 +9,6 @@
       <UButton @click="() => redirect()">
         {{ provider.display_name }}
       </UButton>
-    </EdgeDbOAuthButton>
-  </EdgeDbAuthProviders>
+    </GelOAuthButton>
+</GelAuthProviders>
 </template>

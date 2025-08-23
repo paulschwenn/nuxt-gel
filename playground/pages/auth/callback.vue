@@ -1,6 +1,6 @@
 <template>
   <div class="callback">
-    <EdgeDbOAuthCallback
+    <GelOAuthCallback
       v-slot="{ loading }"
       redirect-to="/"
     >
@@ -12,6 +12,6 @@
           Loading...
         </UButton>
       </UCard>
-    </EdgeDbOAuthCallback>
+    </GelOAuthCallback>
   </div>
 </template>

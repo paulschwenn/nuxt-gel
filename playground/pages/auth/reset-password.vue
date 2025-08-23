@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <EdgeDbAuthResetPassword
+    <GelAuthResetPassword
       v-slot="{ password, updatePassword, submit, loading }"
       redirect-to="/auth/login"
     >
@@ -30,6 +30,6 @@
           </UButton>
         </template>
       </UCard>
-    </EdgeDbAuthResetPassword>
+    </GelAuthResetPassword>
   </div>
 </template>
