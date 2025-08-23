@@ -26,8 +26,8 @@ const { resolve: resolveLocal } = createResolver(import.meta.url)
 
 const nuxtModule = defineNuxtModule<ModuleOptions>({
   meta: {
-    name: 'nuxt-edgedb-module',
-    configKey: 'edgeDb',
+    name: 'nuxt-gel-module',
+    configKey: 'gel',
   },
   // Default configuration options of the Nuxt module
   defaults: {
@@ -62,7 +62,7 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
     // Transpile gel
     nuxt.options.build.transpile ??= []
     nuxt.options.build.transpile.push('gel')
-    nuxt.options.build.transpile.push('nuxt-edgedb-module')
+    nuxt.options.build.transpile.push('nuxt-gel-module')
 
     const envAppUrl = process.env.APP_URL || process.env.NUXT_GEL_APP_URL
 
@@ -79,10 +79,10 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
     console.log('  - About to set basic runtime config (no Gel operations)')
 
     // Inject runtime configuration
-    nuxt.options.runtimeConfig.edgeDb ??= await getEdgeDbConfiguration(appUrl, options, nuxt.options.rootDir, options.injectDbCredentials) as any
+    nuxt.options.runtimeConfig.gel ??= await getEdgeDbConfiguration(appUrl, options, nuxt.options.rootDir, options.injectDbCredentials) as any
 
     // Set basic runtime configuration at build time (no Gel operations)
-    // nuxt.options.runtimeConfig.edgeDb ??= {
+    // nuxt.options.runtimeConfig.gel ??= {
     //   auth: { 
     //     enabled: options?.auth || false, 
     //     oauth: options?.oauth || false, 
@@ -94,7 +94,7 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
 
     // Defer Gel configuration to runtime via a plugin
     if (options.injectDbCredentials) {
-      addServerPlugin(resolveLocal('./runtime/server/plugins/edgedb-config'))
+      addServerPlugin(resolveLocal('./runtime/server/plugins/gel-config'))
     }
 
 
@@ -104,7 +104,7 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
 
     if (canPrompt && options.devtools) {
       let uiUrl: any | undefined
-      if (!process.env.NUXT_EDGEDB_UI_URL && options.injectDbCredentials) {
+      if (!process.env.NUXT_GEL_UI_URL && options.injectDbCredentials) {
         try {
           uiUrl = await execa.execa(`gel`, ['ui', '--print-url'], { cwd: resolveProject() })
         }
@@ -113,20 +113,20 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
         }
       }
 
-      if (process.env?.NUXT_EDGEDB_UI_URL || uiUrl?.stdout) {
+      if (process.env?.NUXT_GEL_UI_URL || uiUrl?.stdout) {
         nuxt.hook('devtools:customTabs' as any, (tabs: any[]) => {
           tabs.push({
             // unique identifier
-            name: 'nuxt-edgedb-module',
+            name: 'nuxt-gel-module',
             // title to display in the tab
-            title: 'EdgeDB',
+            title: 'Gel',
             // any icon from Iconify, or a URL to an image
-            icon: 'logos:edgedb',
+            icon: 'logos:database',
             category: 'app',
             // iframe view
             view: {
               type: 'iframe',
-              src: process.env?.NUXT_EDGEDB_UI_URL || uiUrl.stdout,
+              src: process.env?.NUXT_GEL_UI_URL || uiUrl.stdout,
               persistent: true,
             },
           })
@@ -152,15 +152,15 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
     nuxtOptions.alias = nuxtOptions.alias ?? {}
 
     if (hasQueries)
-      nuxtOptions.alias['#edgedb/queries'] = queriesPath
+      nuxtOptions.alias['#gel/queries'] = queriesPath
     if (hasInterfaces)
-      nuxtOptions.alias['#edgedb/interfaces'] = interfacesPath
+      nuxtOptions.alias['#gel/interfaces'] = interfacesPath
     if (hasQueryBuilder)
-      nuxtOptions.alias['#edgedb/builder'] = builderPath
+      nuxtOptions.alias['#gel/builder'] = builderPath
 
     if (options.composables) {
-      // Add server plugin for EdgeDB client
-      addServerPlugin(resolveLocal('./runtime/server/plugins/edgedb-client'))
+      // Add server plugin for Gel client
+      addServerPlugin(resolveLocal('./runtime/server/plugins/gel-client'))
 
       // Add server imports manually
       addServerImports([
@@ -208,19 +208,19 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
           // Fixes for weird cjs query builder imports
           if (hasQueryBuilder) {
             config.replace ??= {}
-            config.replace['edgedb/dist/primitives/buffer'] = 'edgedb/dist/primitives/buffer.js'
-            config.replace['edgedb/dist/reflection/index'] = 'edgedb/dist/reflection/index.js'
+            config.replace['gel/dist/primitives/buffer'] = 'gel/dist/primitives/buffer.js'
+            config.replace['gel/dist/reflection/index'] = 'gel/dist/reflection/index.js'
           }
 
           // Push server aliases
           config.alias ??= {}
 
           if (hasQueries)
-            config.alias['#edgedb/queries'] = join(dbschemaDir, '/queries.ts')
+            config.alias['#gel/queries'] = join(dbschemaDir, '/queries.ts')
           if (hasInterfaces)
-            config.alias['#edgedb/interfaces'] = join(dbschemaDir, '/interfaces.ts')
+            config.alias['#gel/interfaces'] = join(dbschemaDir, '/interfaces.ts')
           if (hasQueryBuilder)
-            config.alias['#edgedb/builder'] = join(dbschemaDir, '/query-builder/index.ts')
+            config.alias['#gel/builder'] = join(dbschemaDir, '/query-builder/index.ts')
 
           // Enforce paths on typescript config
           config.typescript ??= {}
@@ -229,11 +229,11 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
           config.typescript.tsConfig.compilerOptions.paths ??= {}
 
           if (hasQueries)
-            config.typescript.tsConfig.compilerOptions.paths['#edgedb/queries'] = [`${join(dbschemaDir, '/queries.ts')}`]
+            config.typescript.tsConfig.compilerOptions.paths['#gel/queries'] = [`${join(dbschemaDir, '/queries.ts')}`]
           if (hasInterfaces)
-            config.typescript.tsConfig.compilerOptions.paths['#edgedb/interfaces'] = [`${join(dbschemaDir, '/interfaces.ts')}`]
+            config.typescript.tsConfig.compilerOptions.paths['#gel/interfaces'] = [`${join(dbschemaDir, '/interfaces.ts')}`]
           if (hasQueryBuilder)
-            config.typescript.tsConfig.compilerOptions.paths['#edgedb/builder'] = [`${join(dbschemaDir, '/query-builder/index.ts')}`]
+            config.typescript.tsConfig.compilerOptions.paths['#gel/builder'] = [`${join(dbschemaDir, '/query-builder/index.ts')}`]
         },
       )
     }
@@ -241,7 +241,7 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
     if (options.auth) {
       // Runtime
       addPlugin({
-        src: resolveLocal('./runtime/plugins/edgedb-auth'),
+        src: resolveLocal('./runtime/plugins/gel-auth'),
         mode: 'all',
       })
       addComponentsDir({
@@ -325,11 +325,11 @@ export default nuxtModule
 
 declare module 'nuxt/schema' {
   interface NuxtConfig {
-    ['edgeDb']?: typeof nuxtModule extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
+    ['gel']?: typeof nuxtModule extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
   }
 
   interface RuntimeConfig {
-    edgeDb: {
+    gel: {
       auth: {
         enabled: boolean
         oauth: boolean
