@@ -5,11 +5,11 @@ export async function getGelCredentials(
   cwd: string,
   processInject: boolean = true,
 ) {
-      console.log('🔍 [getGelCredentials] Debug Info:')
+  console.log('🔍 [getGelCredentials] Debug Info:')
   console.log('  - cwd parameter:', cwd)
   console.log('  - process.cwd():', process.cwd())
   console.log('  - processInject:', processInject)
-  
+
   let dbCredentials: any | undefined
 
   try {
@@ -18,12 +18,12 @@ export async function getGelCredentials(
     console.log('  - Command succeeded, stdout:', dbCredentials.stdout)
   }
   catch (e: any) {
-    console.log("❌ [getGelCredentials] Error getting Gel instance credentials:", e)
-    console.log("  - Error details:", {
+    console.log('❌ [getGelCredentials] Error getting Gel instance credentials:', e)
+    console.log('  - Error details:', {
       command: e.command,
       cwd: e.cwd,
       exitCode: e.exitCode,
-      stderr: e.stderr
+      stderr: e.stderr,
     })
   }
 
@@ -61,13 +61,13 @@ export async function getGelConfiguration(
   cwd: string = process.cwd(),
   processInject: boolean = true,
 ) {
-      console.log('🔍 [getGelConfiguration] Debug Info:')
+  console.log('🔍 [getGelConfiguration] Debug Info:')
   console.log('  - appUrl:', appUrl)
   console.log('  - cwd parameter:', cwd)
   console.log('  - processInject:', processInject)
   console.log('  - options:', JSON.stringify(options, null, 2))
-  
-      await getGelCredentials(cwd, processInject)
+
+  await getGelCredentials(cwd, processInject)
 
   const {
     // Gel DSN settings
@@ -82,7 +82,7 @@ export async function getGelConfiguration(
 
     // Gel Auth settings
     NUXT_GEL_IDENTITY_MODEL: identityModel = options?.identityModel || 'User',
- 
+
     // Gel Auth URls
     NUXT_GEL_AUTH_BASE_URL: authBaseUrl = `http://${host}:${port}/branch/${branch || database}/ext/auth/`,
     NUXT_GEL_OAUTH_CALLBACK: oAuthCallbackUrl = `http://${host}:${port}/branch/${branch || database}/ext/auth/callback`,

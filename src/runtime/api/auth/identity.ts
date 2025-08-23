@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     return
   }
 
-  const client = useGel(event) 
+  const client = useGel(event)
 
   try {
     let identityTarget = await client.querySingle(`select global current_user;`)
@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
 
     return identityTarget
   }
-  catch (err) {
+  catch {
     setCookie(
       event,
       'gel-auth-token',

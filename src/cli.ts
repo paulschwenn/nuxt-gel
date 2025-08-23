@@ -16,7 +16,8 @@ async function up() {
   try {
     gelCliVersion = await execa.execa(`gel`, [`--version`], { cwd: resolveProject() }).then(result => result.stdout.replace('Gel CLI ', ''))
   }
-  catch (e) {}
+  catch {
+  }
 
   if (!gelCliVersion) {
     const setupGelCli = await p.select({
@@ -36,10 +37,10 @@ async function up() {
         gelCliVersion = await execa.execa(`gel`, ['--version'], { cwd: resolveProject() }).then(result => result.stdout.replace('Gel CLI ', ''))
         spinner.stop(`Gel CLI version ${gelCliVersion} installed.`)
       }
-      catch (e) {
+      catch {
         spinner.stop('Failed to install Gel CLI.')
         p.log.warn(`Try running: \`${chalk.green('curl https://www.geldata.com/sh --proto "=https" -sSf1 | sh')}\` manually.`)
-      } 
+      }
     }
 
     if (!gelCliVersion) {
@@ -68,8 +69,8 @@ async function up() {
   const dbschemaPath = resolveProject(groupData.path)
 
   if (!existsSync(dbschemaPath)) {
-    p.log.error(`Your ${chalk.green('dbschema')} directory does not exist, you must run \`${chalk.green('gel project init')}\` at least once before running this command.`) 
-  }  
+    p.log.error(`Your ${chalk.green('dbschema')} directory does not exist, you must run \`${chalk.green('gel project init')}\` at least once before running this command.`)
+  }
 
   if (groupData.interfaces === 'yes') {
     const spinner = p.spinner()

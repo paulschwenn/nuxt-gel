@@ -14,20 +14,20 @@
               type="email"
               :value="email"
               placeholder="your@email.com"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               @input="(e) => updateEmail(e.target.value)"
               @keyup.enter="() => submit()"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+            >
           </UFormGroup>
           <UFormGroup label="Password">
             <input
               type="password"
               :value="password"
               placeholder="password"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-500"
               @input="(e) => updatePassword(e.target.value)"
               @keyup.enter="() => submit()"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-500"
-            />
+            >
           </UFormGroup>
         </div>
 

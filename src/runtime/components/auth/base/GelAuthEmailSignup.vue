@@ -27,7 +27,7 @@ async function submit(provider: string = 'builtin::local_emailpassword') {
   success.value = undefined
   loading.value = true
   try {
-    // const msg =`/api/auth/signup  ${password.value} ${email.value}` 
+    // const msg =`/api/auth/signup  ${password.value} ${email.value}`
     // alert(msg)
     const result = await $fetch('/api/auth/signup', {
       method: 'POST',

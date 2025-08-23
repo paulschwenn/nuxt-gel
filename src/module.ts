@@ -44,19 +44,19 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
     oauth: false,
     identityModel: 'User',
   },
-    async setup(options, nuxt) {
+  async setup(options, nuxt) {
     console.log('🔍 [MODULE SETUP] Debug Info:')
     console.log('  - nuxt.options.rootDir:', nuxt.options.rootDir)
     console.log('  - process.cwd():', process.cwd())
     console.log('  - options.dbschemaDir:', options.dbschemaDir)
     console.log('  - options:', JSON.stringify(options, null, 2))
-    
+
     const { resolve: resolveProject } = createResolver(nuxt.options.rootDir)
     const dbschemaDir = resolveProject(options.dbschemaDir)
-    
+
     console.log('  - resolveProject result:', resolveProject())
     console.log('  - dbschemaDir resolved:', dbschemaDir)
-    
+
     const canPrompt = nuxt.options.dev
 
     // Transpile gel
@@ -74,7 +74,7 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
     ].join('')
 
     const appUrl = envAppUrl || devAppUrl
-    
+
     console.log('  - appUrl:', appUrl)
     console.log('  - About to set basic runtime config (no Gel operations)')
 
@@ -83,10 +83,10 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
 
     // Set basic runtime configuration at build time (no Gel operations)
     // nuxt.options.runtimeConfig.gel ??= {
-    //   auth: { 
-    //     enabled: options?.auth || false, 
-    //     oauth: options?.oauth || false, 
-    //     identityModel: options?.identityModel || 'User' 
+    //   auth: {
+    //     enabled: options?.auth || false,
+    //     oauth: options?.oauth || false,
+    //     identityModel: options?.identityModel || 'User'
     //   },
     //   dsn: {},
     //   urls: { appUrl }
@@ -96,7 +96,6 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
     if (options.injectDbCredentials) {
       addServerPlugin(resolveLocal('./runtime/server/plugins/gel-config'))
     }
-
 
     /**
      * Devtools
@@ -108,8 +107,8 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
         try {
           uiUrl = await execa.execa(`gel`, ['ui', '--print-url'], { cwd: resolveProject() })
         }
-        catch (e) {
-          //
+        catch {
+
         }
       }
 

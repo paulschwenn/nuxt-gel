@@ -30,7 +30,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
         await logout()
       }
     }
-    catch (_) {
+    catch {
       //
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <GelAuthProviders v-slot="{ oAuthProviders: providers }">
-<GelOAuthButton
+    <GelOAuthButton
       v-for="provider of providers"
       :key="provider.name"
       v-slot="{ redirect }"
@@ -10,5 +10,5 @@
         {{ provider.display_name }}
       </UButton>
     </GelOAuthButton>
-</GelAuthProviders>
+  </GelAuthProviders>
 </template>

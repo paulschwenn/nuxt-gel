@@ -8,7 +8,7 @@ const props = withDefaults(
   }>(),
   {
     redirectTo: '/',
-    logoutOnSetup: true, 
+    logoutOnSetup: true,
   },
 )
 

@@ -11,6 +11,6 @@ export function useGel(req: H3Event<EventHandlerRequest> | undefined = undefined
       'ext::auth::client_token': req ? getCookie(req, 'gel-auth-token') : undefined,
     })
   }
- 
+
   return client
 }

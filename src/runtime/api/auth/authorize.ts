@@ -21,7 +21,7 @@ export default defineEventHandler(async (req) => {
     return sendError(req, err)
   }
 
-      const pkce = useGelPKCE()
+  const pkce = useGelPKCE()
   const redirectUrl = new URL('authorize', authBaseUrl)
   redirectUrl.searchParams.set('provider', provider)
   redirectUrl.searchParams.set('challenge', pkce.challenge)

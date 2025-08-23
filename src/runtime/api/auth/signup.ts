@@ -61,7 +61,7 @@ export default defineEventHandler(async (req) => {
       password: '[REDACTED]',
       verify_url: verifyRedirectUrl,
     }))
-    
+
     const err = new H3Error(`Error from auth server: ${errorText}`)
     err.statusCode = 400
     return sendError(req, err)
