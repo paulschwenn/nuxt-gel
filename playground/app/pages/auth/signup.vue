@@ -10,24 +10,24 @@
         </template>
         <div class="flex flex-col gap-4">
           <UFormField label="Email">
-            <input
+            <UInput
               type="email"
-              :value="email"
+              :model-value="email"
               placeholder="your@email.com"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              @input="(e) => updateEmail(e.target.value)"
+              autocomplete="email"
+              @update:model-value="updateEmail"
               @keyup.enter="() => submit()"
-            >
+            />
           </UFormField>
           <UFormField label="Password">
-            <input
+            <UInput
               type="password"
-              :value="password"
+              :model-value="password"
               placeholder="password"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-500"
-              @input="(e) => updatePassword(e.target.value)"
+              autocomplete="new-password"
+              @update:model-value="updatePassword"
               @keyup.enter="() => submit()"
-            >
+            />
           </UFormField>
         </div>
 

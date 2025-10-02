@@ -48,26 +48,26 @@ async function submit() {
       <h2>New blogpost</h2>
     </template>
     <div class="flex flex-col gap-2">
-      <UFormGroup label="Title">
+      <UFormField label="Title">
         <UInput
           v-model="title"
           type="text"
           placeholder="My new blogpost"
         />
-      </UFormGroup>
-      <UFormGroup label="Description">
+      </UFormField>
+      <UFormField label="Description">
         <UInput
           v-model="description"
           type="text"
           placeholder="My blogpost description."
         />
-      </UFormGroup>
-      <UFormGroup label="Content">
+      </UFormField>
+      <UFormField label="Content">
         <UTextarea
           v-model="content"
           placeholder="I love Nuxt."
         />
-      </UFormGroup>
+      </UFormField>
     </div>
     <template #footer>
       <UButton color="gray" @click="submit">
