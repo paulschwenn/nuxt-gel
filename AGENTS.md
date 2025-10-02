@@ -13,6 +13,7 @@ The goal of this project is to port the `nuxt-gel` module to Nuxt 4. This involv
 4.  **`pnpm` Compatibility:** Ensure that the project continues to work seamlessly with `pnpm`. All scripts and workflows should be tested with `pnpm`.
 5.  **CLI:** The CLI must be compatible with `pnpm`.
 6.  **Testing:** Thoroughly test the module in the playground to ensure all features are working correctly after the upgrade.
+7. **MCP tools:** Use the relevant mcp tools for maximum token efficiency and context utilisation. 
 
 ## AI Coding Assistant Guidelines
 
