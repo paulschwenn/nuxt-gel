@@ -10,12 +10,12 @@
   },
   "dependencies": {
     "@iconify-json/heroicons": "^1.1.20",
-    "@nuxt/ui": "^2.14.2"
+    "@nuxt/ui": "^4.0.0"
   },
   "devDependencies": {
     "@gel/generate": "^0.6.4",
-    "@nuxt/devtools": "latest",
-    "nuxt": "^3.14.0",
+    "@nuxt/devtools": "^2.6.5",
+    "nuxt": "^4.1.2",
     "nuxt-gel-module": "link:.."
   }
 }

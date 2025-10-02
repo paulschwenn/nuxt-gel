@@ -11,6 +11,7 @@ export default defineBuildConfig({
     'pathe',
     'chalk',
     'prompts',
+    '@nuxt/devtools-kit',
     'gel',
     '@gel/generate',
   ],

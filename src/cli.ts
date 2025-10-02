@@ -5,6 +5,113 @@ import { createResolver } from '@nuxt/kit'
 import chalk from 'chalk'
 
 const { resolve: resolveProject } = createResolver(process.cwd())
+const GENERATOR_PACKAGE = '@gel/generate'
+
+interface PackageManagerRunner {
+  command: string
+  args: string[]
+  agentPrefix?: string
+}
+
+function resolveLocalGeneratorBinary() {
+  const unixPath = resolveProject('node_modules/.bin/generate')
+  if (existsSync(unixPath))
+    return unixPath
+
+  const windowsPath = resolveProject('node_modules/.bin/generate.cmd')
+  if (existsSync(windowsPath))
+    return windowsPath
+}
+
+function createRunnerList(agent?: string | null): PackageManagerRunner[] {
+  const baseRunners: PackageManagerRunner[] = [
+    { command: 'pnpm', args: ['dlx'], agentPrefix: 'pnpm/' },
+    { command: 'yarn', args: ['dlx'], agentPrefix: 'yarn/' },
+    { command: 'bunx', args: [], agentPrefix: 'bun/' },
+    { command: 'npx', args: ['--yes'], agentPrefix: 'npm/' },
+  ]
+
+  if (!agent)
+    return baseRunners
+
+  const prioritized = baseRunners.filter(runner => runner.agentPrefix && agent.startsWith(runner.agentPrefix))
+  const remaining = baseRunners.filter(runner => !prioritized.includes(runner))
+
+  return [...prioritized, ...remaining]
+}
+
+function shouldFallbackToNextRunner(error: any) {
+  if (!error)
+    return false
+
+  if (error.code === 'ENOENT')
+    return true
+
+  if (typeof error.exitCode === 'number' && error.exitCode === 127)
+    return true
+
+  const message = typeof error.message === 'string' ? error.message : ''
+  const stderr = error?.stderr ? String(error.stderr) : ''
+
+  return /not found|not recognized/i.test(message) || /not found|not recognized/i.test(stderr)
+}
+
+async function runGelGenerate(subCommand: string, generatorArgs: string[]) {
+  const cwd = resolveProject()
+  const localBinary = resolveLocalGeneratorBinary()
+
+  if (localBinary) {
+    await execa.execa(localBinary, [subCommand, ...generatorArgs], { cwd, preferLocal: true })
+    return
+  }
+
+  const agent = process.env.npm_config_user_agent ?? null
+  const runners = createRunnerList(agent)
+  let lastError: any
+
+  for (const runner of runners) {
+    try {
+      await execa.execa(runner.command, [...runner.args, GENERATOR_PACKAGE, subCommand, ...generatorArgs], { cwd })
+      return
+    }
+    catch (error) {
+      if (shouldFallbackToNextRunner(error))
+        continue
+
+      lastError = error
+      break
+    }
+  }
+
+  if (lastError)
+    throw lastError
+
+  throw new Error('Unable to locate a package manager capable of running @gel/generate.')
+}
+
+async function runGeneratorStep(startMessage: string, successMessage: string, failureMessage: string, subCommand: string, args: string[]) {
+  const spinner = p.spinner()
+  spinner.start(startMessage)
+
+  try {
+    await runGelGenerate(subCommand, args)
+    spinner.stop(successMessage)
+  }
+  catch (error: any) {
+    spinner.stop(failureMessage)
+
+    const stderrOutput = error?.stderr ? String(error.stderr) : ''
+
+    if (stderrOutput)
+      p.log.error(stderrOutput)
+    else if (error?.message)
+      p.log.error(error.message)
+    else
+      p.log.error('Unknown error while running @gel/generate.')
+
+    process.exit(1)
+  }
+}
 
 async function up() {
   p.intro(chalk.bgGreen.blue(` nuxt-gel `))
@@ -73,27 +180,33 @@ async function up() {
   }
 
   if (groupData.interfaces === 'yes') {
-    const spinner = p.spinner()
-
-    spinner.start('Generating interfaces...')
-    await execa.$`npx @gel/generate interfaces --file ${dbschemaPath}/interfaces.ts --force-overwrite`
-    spinner.stop('Interfaces generated.')
+    await runGeneratorStep(
+      'Generating interfaces...',
+      'Interfaces generated.',
+      'Failed to generate interfaces.',
+      'interfaces',
+      ['--file', `${dbschemaPath}/interfaces.ts`, '--force-overwrite'],
+    )
   }
 
   if (groupData.queries === 'yes') {
-    const spinner = p.spinner()
-
-    spinner.start('Generating queries...')
-    await execa.$`npx @gel/generate queries --file ${dbschemaPath}/queries --target=ts --force-overwrite`
-    spinner.stop('Queries generated.')
+    await runGeneratorStep(
+      'Generating queries...',
+      'Queries generated.',
+      'Failed to generate queries.',
+      'queries',
+      ['--file', `${dbschemaPath}/queries`, '--target=ts', '--force-overwrite'],
+    )
   }
 
   if (groupData.queryBuilder === 'yes') {
-    const spinner = p.spinner()
-
-    spinner.start('Generating query builder...')
-    await execa.$`npx @gel/generate edgeql-js --output-dir ${dbschemaPath}/query-builder --force-overwrite --target=ts`
-    spinner.stop('Query builder generated.')
+    await runGeneratorStep(
+      'Generating query builder...',
+      'Query builder generated.',
+      'Failed to generate query builder.',
+      'edgeql-js',
+      ['--output-dir', `${dbschemaPath}/query-builder`, '--force-overwrite', '--target=ts'],
+    )
   }
 
   p.log.success('Done. Feel free to checkout the next steps on the README')

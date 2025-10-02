@@ -60,6 +60,8 @@ Temporary Items
 
 gel.toml
 dbschema/
+!test/fixtures/**/dbschema/
+!test/fixtures/**/dbschema/**
 # Gel
 **/*.edgeql.ts
 **/dbschema/queries.*

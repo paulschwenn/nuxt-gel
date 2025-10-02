@@ -130,34 +130,44 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
      */
 
     if (canPrompt && options.devtools) {
-      let uiUrl: any | undefined
+      let detectedUiUrl: string | undefined
+
       if (!process.env.NUXT_GEL_UI_URL && options.injectDbCredentials) {
         try {
-          uiUrl = await execa.execa(`gel`, ['ui', '--print-url'], { cwd: resolveProject() })
+          const result = await execa.execa('gel', ['ui', '--print-url'], { cwd: resolveProject() })
+          detectedUiUrl = result.stdout?.trim()
         }
         catch {
-
+          // Silently ignore – Gel UI is optional during development
         }
       }
 
-      if (process.env?.NUXT_GEL_UI_URL || uiUrl?.stdout) {
-        nuxt.hook('devtools:customTabs' as any, (tabs: any[]) => {
-          tabs.push({
-            // unique identifier
-            name: 'nuxt-gel-module',
-            // title to display in the tab
-            title: 'Gel',
-            // any icon from Iconify, or a URL to an image
-            icon: 'logos:database',
-            category: 'app',
-            // iframe view
-            view: {
-              type: 'iframe',
-              src: process.env?.NUXT_GEL_UI_URL || uiUrl.stdout,
-              persistent: true,
-            },
-          })
-        })
+      const tabUrl = (process.env.NUXT_GEL_UI_URL || detectedUiUrl)?.trim()
+
+      if (tabUrl) {
+        try {
+          const devtools = await import('@nuxt/devtools-kit').catch(() => null)
+
+          if (devtools?.addCustomTab) {
+            devtools.addCustomTab(
+              () => ({
+                name: 'nuxt-gel-module',
+                title: 'Gel',
+                icon: 'logos:database',
+                category: 'app',
+                view: {
+                  type: 'iframe',
+                  src: tabUrl,
+                  persistent: true,
+                },
+              }),
+              nuxt,
+            )
+          }
+        }
+        catch (error) {
+          logger.withTag('gel').debug('Unable to register Nuxt DevTools tab.', error)
+        }
       }
     }
 
@@ -269,7 +279,6 @@ const nuxtModule = defineNuxtModule<ModuleOptions>({
       // Runtime
       addPlugin({
         src: resolveLocal('./runtime/plugins/gel-auth'),
-        mode: 'all',
       })
       addComponentsDir({
         path: resolveLocal('./runtime/components/auth/base'),

@@ -2,7 +2,7 @@
   "name": "nuxt-gel-module",
   "type": "module",
   "version": "0.1.4",
-  "description": "Nuxt 3 integration for Gel.",
+  "description": "Nuxt 4 integration for Gel.",
   "license": "MIT",
   "repository": "github:veritymedia/nuxt-gel",
   "homepage": "https://github.com/veritymedia/nuxt-gel#readme",
@@ -19,19 +19,18 @@
   "bin": "./dist/cli.mjs",
   "exports": {
     ".": {
-      "types": "./dist/module.d.ts",
+      "types": "./dist/module.d.mts",
       "import": "./dist/module.mjs",
-      "require": "./dist/module.cjs"
+      "default": "./dist/module.mjs"
     },
     "./utils": {
-      "types": "./dist/utils.d.ts",
+      "types": "./dist/utils.d.mts",
       "import": "./dist/utils.mjs",
-      "require": "./dist/utils.mjs"
+      "default": "./dist/utils.mjs"
     },
     "./runtime/*": "./dist/runtime/*"
   },
-  "main": "./dist/module.cjs",
-  "types": "./dist/module.d.ts",
+  "main": "./dist/module.mjs",
   "files": [
     "dist",
     "templates"
@@ -56,25 +55,26 @@
     "@clack/core": "^0.3.4",
     "@clack/prompts": "^0.7.0",
     "@gel/generate": "^0.6.4",
-    "@nuxt/kit": "^3.12.2",
+    "@nuxt/kit": "^4.1.2",
     "execa": "^9.2.0",
     "gel": "^2.1.1",
     "prompts": "^2.4.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.21.1",
-    "@nuxt/devtools": "latest",
-    "@nuxt/module-builder": "^0.7.1",
-    "@nuxt/schema": "^3.12.2",
-    "@nuxt/test-utils": "^3.13.1",
-    "@types/node": "^20.14.3",
+    "@nuxt/devtools": "^2.6.5",
+    "@nuxt/module-builder": "^1.0.2",
+    "@nuxt/schema": "^4.1.2",
+    "@nuxt/test-utils": "^3.19.2",
+    "@types/node": "^22.9.3",
     "@types/prompts": "^2.4.9",
     "changelogen": "^0.5.5",
     "chokidar-cli": "^3.0.0",
     "concurrently": "^9.2.0",
     "eslint": "^9.5.0",
-    "nuxt": "^3.12.2",
-    "vitest": "^1.6.0"
+    "nuxt": "^4.1.2",
+    "vue-tsc": "^3.1.0",
+    "vitest": "^3.2.4"
   },
   "resolutions": {
     "nuxt-gel-module": "link:."
