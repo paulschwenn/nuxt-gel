@@ -9,14 +9,14 @@
           <h2>Forgot my password</h2>
         </template>
         <div class="flex flex-col gap-4">
-          <UFormGroup label="Email">
+          <UFormField label="Email">
             <UInput
               type="email"
               :value="email"
               placeholder="your@email.com"
               @change="(e: any) => updateEmail(e.target.value)"
             />
-          </UFormGroup>
+          </UFormField>
         </div>
 
         <template #footer>

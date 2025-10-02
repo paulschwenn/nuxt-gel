@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const { isLoggedIn } = useGelIdentity()
 
-const links = computed(() => {
-  const links = [
+const navigationItems = computed(() => {
+  const items = [
     {
       label: 'Home',
       icon: 'i-heroicons-home',
@@ -11,7 +11,7 @@ const links = computed(() => {
   ]
 
   if (isLoggedIn.value) {
-    links.push(
+    items.push(
       {
         label: 'New blogpost',
         icon: 'i-heroicons-newspaper-20-solid',
@@ -25,7 +25,7 @@ const links = computed(() => {
     )
   }
   else {
-    links.push(
+    items.push(
       {
         label: 'Register',
         icon: 'i-heroicons-key-20-solid',
@@ -44,16 +44,18 @@ const links = computed(() => {
     )
   }
 
-  return links
+  return items
 })
 </script>
 
 <template>
-  <UContainer class="p-8 flex flex-col gap-4">
-    <UVerticalNavigation :links="links" />
+  <UApp>
+    <UContainer class="p-8 flex flex-col gap-4">
+      <UNavigationMenu orientation="vertical" :items="navigationItems" />
 
-    <div>
-      <NuxtPage />
-    </div>
-  </UContainer>
+      <div>
+        <NuxtPage />
+      </div>
+    </UContainer>
+  </UApp>
 </template>

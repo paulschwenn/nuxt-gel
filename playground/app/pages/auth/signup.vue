@@ -9,7 +9,7 @@
           <h2>Signup</h2>
         </template>
         <div class="flex flex-col gap-4">
-          <UFormGroup label="Email">
+          <UFormField label="Email">
             <input
               type="email"
               :value="email"
@@ -18,8 +18,8 @@
               @input="(e) => updateEmail(e.target.value)"
               @keyup.enter="() => submit()"
             >
-          </UFormGroup>
-          <UFormGroup label="Password">
+          </UFormField>
+          <UFormField label="Password">
             <input
               type="password"
               :value="password"
@@ -28,7 +28,7 @@
               @input="(e) => updatePassword(e.target.value)"
               @keyup.enter="() => submit()"
             >
-          </UFormGroup>
+          </UFormField>
         </div>
 
         <template #footer>
