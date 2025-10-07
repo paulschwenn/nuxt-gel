@@ -71,6 +71,49 @@ pnpm run dev
 
 You may need to run `pnpm -C playground exec nuxt prepare`?
 
+### Playground: Gel UI Setup (Auth)
+
+Use Gel UI to configure auth for the playground before testing signup/login.
+
+1) Open Gel UI
+
+- From a terminal in the `playground` directory: `gel ui --print-url` and open the URL.
+- Or in Nuxt DevTools: open the “Gel” tab (the module auto-adds it during dev)
+
+2) Auth Admin configuration
+
+- Set an `auth_signing_key` (Generate/Rotate in the UI is fine)
+- Add the following to `allowed_redirect_urls`:
+
+  ```text
+  http://localhost:3000
+  http://localhost:3000/auth/verify
+  http://localhost:3000/auth/callback
+  http://localhost:3000/auth/reset-password
+  ```
+
+- Enable the Email + Password provider:
+
+  - Provider name: `builtin::local_emailpassword`
+  - For local development, you can disable `require_verification` OR configure SMTP (e.g. Mailpit)
+
+3) Verify providers from the app (optional)
+
+- Visit `GET /api/auth/providers` in the playground; you should see `builtin::local_emailpassword`
+
+4) Test flows
+
+- Signup: `http://localhost:3000/auth/signup`
+- Login: `http://localhost:3000/auth/login`
+- Forgot/Reset: `http://localhost:3000/auth/forgot-password` → email link → `http://localhost:3000/auth/reset-password`
+
+Troubleshooting
+
+- 400 “unknown provider”: ensure `builtin::local_emailpassword` is enabled
+- 400 “redirect not allowed”: confirm the exact URL is in `allowed_redirect_urls`
+- “Missing verifier” on verify/reset: use the same browser/session that initiated the flow (PKCE cookie)
+- If you changed ports/host, update `allowed_redirect_urls` accordingly
+
 ## Module options
 
 You can configure any behavior from the module from your `nuxt.config.ts` file:
@@ -674,5 +717,4 @@ npm run release
 
 [nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?logo=nuxt.js
 [nuxt-href]: https://nuxt.com
-
 

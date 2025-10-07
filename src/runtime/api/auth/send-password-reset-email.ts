@@ -56,10 +56,11 @@ export default defineEventHandler(async (req) => {
 
   const { email_sent } = await sendResetResponse.json()
 
+  const secureFlag = (resolveAuthEnv().appUrl?.startsWith('https://') ? '; Secure' : '')
   setHeaders(
     req,
     {
-      'Set-Cookie': `gel-pkce-verifier=${pkce.verifier}; HttpOnly; Path=/; Secure; SameSite=Strict`,
+      'Set-Cookie': `gel-pkce-verifier=${pkce.verifier}; HttpOnly; Path=/; SameSite=Strict${secureFlag}`,
     },
   )
 

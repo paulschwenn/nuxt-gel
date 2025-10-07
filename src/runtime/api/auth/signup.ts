@@ -70,10 +70,19 @@ export default defineEventHandler(async (req) => {
       // ignore JSON parse error; keep raw text
     }
 
+    const statusMessage = (() => {
+      const candidates = [parsed?.message, parsed?.error, registerResponse.statusText, 'Auth register failed']
+      for (const v of candidates) {
+        if (typeof v === 'string' && v.trim())
+          return v
+      }
+      return 'Auth register failed'
+    })()
+
     // Provide actionable error details without leaking secrets
     const err = createError({
       statusCode: registerResponse.status || 400,
-      statusMessage: parsed?.message || parsed?.error || registerResponse.statusText || 'Auth register failed',
+      statusMessage,
       data: {
         reason: parsed ?? rawText ?? 'Unknown error',
         request: {
@@ -91,8 +100,9 @@ export default defineEventHandler(async (req) => {
 
   const registerResponseData = await registerResponse.json()
 
+  const secureFlag = (resolveAuthEnv().appUrl?.startsWith('https://') ? '; Secure' : '')
   setHeaders(req, {
-    'Set-Cookie': `gel-pkce-verifier=${pkce.verifier}; HttpOnly; Path=/; Secure; SameSite=Strict`,
+    'Set-Cookie': `gel-pkce-verifier=${pkce.verifier}; HttpOnly; Path=/; SameSite=Strict${secureFlag}`,
   })
 
   return registerResponseData
