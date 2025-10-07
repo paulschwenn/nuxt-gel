@@ -2,10 +2,7 @@ import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
   srcDir: 'app',
-  modules: [
-    '../src/module',
-    '@nuxt/ui',
-  ],
+  modules: ['../src/module', '@nuxt/ui', '@nuxt/scripts'],
   css: ['~/assets/css/main.css'],
   rootDir: '.',
   future: {
@@ -26,5 +23,8 @@ export default defineNuxtConfig({
     provider: 'google',
     // or, keep automatic provider selection but *disable* bunny:
     // providers: { bunny: false }
-  }
+  },
+  scripts: {
+    typecheck: "nuxt typecheck"
+  },
 })

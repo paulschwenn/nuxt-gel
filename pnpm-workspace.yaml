@@ -1,2 +1,8 @@
 packages:
   - playground
+
+ignoredBuiltDependencies:
+  - vue-demi
+
+onlyBuiltDependencies:
+  - '@tailwindcss/oxide'

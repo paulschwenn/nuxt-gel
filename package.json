@@ -49,7 +49,8 @@
     "release": "npm run lint && npm run build && npm publish && git push --follow-tags",
     "lint": "eslint .",
     "test": "vitest run",
-    "test:watch": "vitest watch"
+    "test:watch": "vitest watch",
+    "typecheck": "nuxt typecheck"
   },
   "dependencies": {
     "@clack/core": "^0.3.4",
@@ -73,8 +74,9 @@
     "concurrently": "^9.2.0",
     "eslint": "^9.5.0",
     "nuxt": "^4.1.2",
-    "vue-tsc": "^3.1.0",
-    "vitest": "^3.2.4"
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4",
+    "vue-tsc": "^3.1.0"
   },
   "resolutions": {
     "nuxt-gel-module": "link:."

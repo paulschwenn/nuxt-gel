@@ -69,6 +69,8 @@ npx nuxt-gel-module
 pnpm run dev
 ```
 
+You may need to run `pnpm -C playground exec nuxt prepare`?
+
 ## Module options
 
 You can configure any behavior from the module from your `nuxt.config.ts` file:
@@ -672,3 +674,5 @@ npm run release
 
 [nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?logo=nuxt.js
 [nuxt-href]: https://nuxt.com
+
+

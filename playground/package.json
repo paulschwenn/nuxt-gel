@@ -14,8 +14,13 @@
   },
   "devDependencies": {
     "@gel/generate": "^0.6.4",
+    "@googlemaps/markerclusterer": "^2.6.2",
     "@nuxt/devtools": "^2.6.5",
+    "@nuxt/scripts": "0.12.1",
+    "@unhead/vue": "^2.0.17",
     "nuxt": "^4.1.2",
-    "nuxt-gel-module": "link:.."
+    "nuxt-gel-module": "link:..",
+    "typescript": "^5.9.3",
+    "vue-tsc": "^3.1.0"
   }
 }
