@@ -43,7 +43,7 @@
               Login
             </UButton>
 
-            <OAuthProviders />
+            <GelAuthProviders />
           </div>
         </template>
       </UCard>

@@ -1,8 +1,16 @@
-import { H3Error, defineEventHandler, readBody, sendError, setCookie } from 'h3'
+import { H3Error, defineEventHandler, isMethod, readBody, sendError, setCookie, setHeaders } from 'h3'
 import { useGelEnv } from '../../server/composables/useGelEnv'
 import { useGelPKCE } from '../../server/composables/useGelPKCE'
 
 export default defineEventHandler(async (req) => {
+  // Enforce POST for body parsing to avoid 405 from readBody on GET
+  if (!isMethod(req, 'POST')) {
+    const err = new H3Error('Method Not Allowed')
+    err.statusCode = 405
+    setHeaders(req, { Allow: 'POST' })
+    return sendError(req, err)
+  }
+
   const pkce = useGelPKCE()
   const { urls } = useGelEnv()
   const { authBaseUrl } = urls

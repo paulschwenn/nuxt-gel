@@ -1,4 +1,4 @@
-import { defineNitroPlugin } from 'nitropack/dist/runtime/plugin'
+import { defineNitroPlugin } from 'nitropack/runtime'
 import { getGelConfiguration } from '../../../utils'
 import { useRuntimeConfig } from '#imports'
 

@@ -1,5 +1,5 @@
 import { createClient } from 'gel'
-import { defineNitroPlugin } from 'nitropack/dist/runtime/plugin'
+import { defineNitroPlugin } from 'nitropack/runtime'
 import { useGelEnv } from '../composables/useGelEnv'
 
 export default defineNitroPlugin(() => {
