@@ -1,5 +1,5 @@
-import { H3Error, defineEventHandler, getRequestURL, sendError, setHeaders } from 'h3'
-import { useGelEnv } from '../../server/composables/useGelEnv'
+import { H3Error, defineEventHandler, getRequestURL, isMethod, sendError, setHeaders } from 'h3'
+import { resolveAuthEnv } from '../../server/utils/resolveAuthEnv'
 import { useGelPKCE } from '../../server/composables/useGelPKCE'
 
 /**
@@ -10,8 +10,20 @@ import { useGelPKCE } from '../../server/composables/useGelPKCE'
  * @param {Request} req
  */
 export default defineEventHandler(async (req) => {
-  const { urls } = useGelEnv()
-  const { authBaseUrl, oAuthRedirectUrl } = urls
+  if (!isMethod(req, 'GET')) {
+    const err = new H3Error('Method Not Allowed')
+    err.statusCode = 405
+    setHeaders(req, { Allow: 'GET' })
+    return sendError(req, err)
+  }
+
+  const { authBaseUrl, oAuthRedirectUrl } = resolveAuthEnv()
+
+  if (!authBaseUrl) {
+    const err = new H3Error('Auth base URL is not configured')
+    err.statusCode = 500
+    return sendError(req, err)
+  }
   const requestUrl = getRequestURL(req)
   const provider = requestUrl.searchParams.get('provider')
 
@@ -34,7 +46,5 @@ export default defineEventHandler(async (req) => {
     },
   )
 
-  return {
-    redirect: redirectUrl,
-  }
+  return { redirect: redirectUrl.href }
 })

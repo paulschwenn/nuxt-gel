@@ -1,5 +1,5 @@
-import { H3Error, defineEventHandler, getCookie, getRequestURL, sendError, setHeaders } from 'h3'
-import { useGelEnv } from '../../server/composables/useGelEnv'
+import { H3Error, defineEventHandler, getCookie, getRequestURL, isMethod, sendError, setHeaders } from 'h3'
+import { resolveAuthEnv } from '../../server/utils/resolveAuthEnv'
 
 /**
  * Handles the link in the email verification flow.
@@ -7,8 +7,20 @@ import { useGelEnv } from '../../server/composables/useGelEnv'
  * @param {Request} req
  */
 export default defineEventHandler(async (req) => {
-  const { urls } = useGelEnv()
-  const { authBaseUrl } = urls
+  if (!isMethod(req, 'POST')) {
+    const err = new H3Error('Method Not Allowed')
+    err.statusCode = 405
+    setHeaders(req, { Allow: 'POST' })
+    return sendError(req, err)
+  }
+
+  const { authBaseUrl } = resolveAuthEnv()
+
+  if (!authBaseUrl) {
+    const err = new H3Error('Auth base URL is not configured')
+    err.statusCode = 500
+    return sendError(req, err)
+  }
 
   const requestUrl = getRequestURL(req)
   const verification_token = requestUrl.searchParams.get('verification_token')
@@ -61,8 +73,9 @@ export default defineEventHandler(async (req) => {
 
   const tokenResponseData = await tokenResponse.json()
 
+  const secureFlag = (resolveAuthEnv().appUrl?.startsWith('https://') ? '; Secure' : '')
   setHeaders(req, {
-    'Set-Cookie': `gel-auth-token=${tokenResponseData.auth_token}; HttpOnly; Path=/; Secure; SameSite=Strict`,
+    'Set-Cookie': `gel-auth-token=${tokenResponseData.auth_token}; HttpOnly; Path=/; SameSite=Strict${secureFlag}`,
   })
 
   return tokenResponseData

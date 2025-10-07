@@ -1,9 +1,11 @@
 import { defineEventHandler, deleteCookie, getCookie, setCookie } from 'h3'
 import { useGelEnv } from '../../server/composables/useGelEnv'
 import { useGel } from '../../server/composables/useGel'
+import { resolveAuthEnv } from '../../server/utils/resolveAuthEnv'
 
 export default defineEventHandler(async (event) => {
   const { auth } = useGelEnv()
+  const { appUrl } = resolveAuthEnv()
 
   const token = getCookie(event, 'gel-auth-token')
 
@@ -36,7 +38,7 @@ export default defineEventHandler(async (event) => {
       {
         httpOnly: true,
         path: '/',
-        secure: true,
+        secure: appUrl?.startsWith('https://') || false,
         sameSite: true,
         expires: new Date(0),
       },

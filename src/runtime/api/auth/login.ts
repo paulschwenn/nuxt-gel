@@ -1,6 +1,6 @@
 import { H3Error, defineEventHandler, isMethod, readBody, sendError, setCookie, setHeaders } from 'h3'
-import { useGelEnv } from '../../server/composables/useGelEnv'
 import { useGelPKCE } from '../../server/composables/useGelPKCE'
+import { resolveAuthEnv } from '../../server/utils/resolveAuthEnv'
 
 export default defineEventHandler(async (req) => {
   // Enforce POST for body parsing to avoid 405 from readBody on GET
@@ -12,13 +12,17 @@ export default defineEventHandler(async (req) => {
   }
 
   const pkce = useGelPKCE()
-  const { urls } = useGelEnv()
-  const { authBaseUrl } = urls
+  const { authBaseUrl, appUrl } = resolveAuthEnv()
 
-  console.log('🔍 [LOGIN API] Debug Info:')
-  console.log('  - urls:', urls)
-  console.log('  - authBaseUrl:', authBaseUrl)
-  console.log('  - pkce.challenge:', pkce.challenge)
+  if (!authBaseUrl) {
+    const err = new H3Error('Auth base URL is not configured')
+    err.statusCode = 500
+    return sendError(req, err)
+  }
+
+  // console.log('🔍 [LOGIN API] Debug Info:')
+  // console.log('  - authBaseUrl:', authBaseUrl)
+  // console.log('  - pkce.challenge:', pkce.challenge)
 
   const { email, password, provider } = await readBody(req)
 
@@ -68,7 +72,7 @@ export default defineEventHandler(async (req) => {
   setCookie(req, 'gel-auth-token', tokenResponseData.auth_token, {
     httpOnly: true,
     path: '/',
-    secure: true,
+    secure: appUrl?.startsWith('https://') || false,
     sameSite: true,
   })
 

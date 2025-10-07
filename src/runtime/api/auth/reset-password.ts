@@ -1,5 +1,5 @@
 import { H3Error, defineEventHandler, getCookie, isMethod, readBody, sendError, setHeaders } from 'h3'
-import { useGelEnv } from '../../server/composables/useGelEnv'
+import { resolveAuthEnv } from '../../server/utils/resolveAuthEnv'
 
 /**
  * Send new password with reset token to Gel Auth.
@@ -15,8 +15,13 @@ export default defineEventHandler(async (req) => {
     return sendError(req, err)
   }
 
-  const { urls } = useGelEnv()
-  const { authBaseUrl } = urls
+  const { authBaseUrl } = resolveAuthEnv()
+
+  if (!authBaseUrl) {
+    const err = new H3Error('Auth base URL is not configured')
+    err.statusCode = 500
+    return sendError(req, err)
+  }
   const { reset_token, password } = await readBody(req)
 
   if (!reset_token || !password) {
@@ -67,8 +72,9 @@ export default defineEventHandler(async (req) => {
   }
 
   const tokenResponseData = await tokenResponse.json()
+  const secureFlag = (resolveAuthEnv().appUrl?.startsWith('https://') ? '; Secure' : '')
   setHeaders(req, {
-    'Set-Cookie': `gel-auth-token=${tokenResponseData.auth_token}; HttpOnly; Path=/; Secure; SameSite=Strict`,
+    'Set-Cookie': `gel-auth-token=${tokenResponseData.auth_token}; HttpOnly; Path=/; SameSite=Strict${secureFlag}`,
   })
 
   return tokenResponseData

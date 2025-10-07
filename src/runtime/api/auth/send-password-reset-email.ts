@@ -1,6 +1,6 @@
 import { H3Error, defineEventHandler, isMethod, readBody, sendError, setHeaders } from 'h3'
-import { useGelEnv } from '../../server/composables/useGelEnv'
 import { useGelPKCE } from '../../server/composables/useGelPKCE'
+import { resolveAuthEnv } from '../../server/utils/resolveAuthEnv'
 
 /**
  * Request a password reset for an email.
@@ -17,8 +17,13 @@ export default defineEventHandler(async (req) => {
   }
 
   const pkce = useGelPKCE()
-  const { urls } = useGelEnv()
-  const { authBaseUrl, resetPasswordUrl: reset_url } = urls
+  const { authBaseUrl, resetPasswordUrl: reset_url } = resolveAuthEnv()
+
+  if (!authBaseUrl) {
+    const err = new H3Error('Auth base URL is not configured')
+    err.statusCode = 500
+    return sendError(req, err)
+  }
 
   const { email } = await readBody(req)
   const provider = 'builtin::local_emailpassword'

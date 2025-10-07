@@ -4,8 +4,6 @@ import { useRuntimeConfig } from '#imports'
 
 export default defineNitroPlugin(async () => {
   try {
-    // Wait a bit for runtime config to be available
-    await new Promise(resolve => setTimeout(resolve, 100))
 
     // Get the Nuxt runtime config
     const config = useRuntimeConfig()

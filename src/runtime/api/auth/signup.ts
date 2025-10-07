@@ -1,6 +1,6 @@
-import { H3Error, defineEventHandler, isMethod, readBody, sendError, setHeaders } from 'h3'
-import { useGelEnv } from '../../server/composables/useGelEnv'
+import { H3Error, createError, defineEventHandler, isMethod, readBody, sendError, setHeaders } from 'h3'
 import { useGelPKCE } from '../../server/composables/useGelPKCE'
+import { resolveAuthEnv } from '../../server/utils/resolveAuthEnv'
 
 /**
  * Handles sign up with email and password.
@@ -18,8 +18,13 @@ export default defineEventHandler(async (req) => {
   }
 
   const pkce = useGelPKCE()
-  const { urls } = useGelEnv()
-  const { authBaseUrl, verifyRedirectUrl } = urls
+  const { authBaseUrl, verifyRedirectUrl } = resolveAuthEnv()
+
+  if (!authBaseUrl) {
+    const err = new H3Error('Auth base URL is not configured')
+    err.statusCode = 500
+    return sendError(req, err)
+  }
 
   // console.log('🔍 [SIGNUP API] Debug Info:')
   // console.log('  - urls:', urls)
@@ -56,22 +61,31 @@ export default defineEventHandler(async (req) => {
   })
 
   if (!registerResponse.ok) {
-    const errorText = await registerResponse.text()
-    // console.log('🔍 [SIGNUP API] Gel Auth Server Error:')
-    // console.log('  - Status:', registerResponse.status)
-    // console.log('  - Status Text:', registerResponse.statusText)
-    // console.log('  - Response Body:', errorText)
-    // console.log('  - Request URL:', registerUrl.href)
-    // console.log('  - Request Body:', JSON.stringify({
-    //   challenge: pkce.challenge,
-    //   email,
-    //   provider,
-    //   password: '[REDACTED]',
-    //   verify_url: verifyRedirectUrl,
-    // }))
+    const rawText = await registerResponse.text()
+    let parsed: any
+    try {
+      parsed = rawText ? JSON.parse(rawText) : undefined
+    }
+    catch {
+      // ignore JSON parse error; keep raw text
+    }
 
-    const err = new H3Error(`Error from auth server: ${errorText}`)
-    err.statusCode = 400
+    // Provide actionable error details without leaking secrets
+    const err = createError({
+      statusCode: registerResponse.status || 400,
+      statusMessage: parsed?.message || parsed?.error || registerResponse.statusText || 'Auth register failed',
+      data: {
+        reason: parsed ?? rawText ?? 'Unknown error',
+        request: {
+          // Never include password; include only safe fields
+          email,
+          provider,
+          verify_url: verifyRedirectUrl,
+          endpoint: registerUrl.href,
+        },
+      },
+    })
+
     return sendError(req, err)
   }
 

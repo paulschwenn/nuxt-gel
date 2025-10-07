@@ -1,6 +1,6 @@
 import { H3Error, defineEventHandler, getCookie, getRequestURL, sendError, setHeaders } from 'h3'
 import { useNitroApp } from 'nitropack/runtime'
-import { useGelEnv } from '../../server/composables/useGelEnv'
+import { resolveAuthEnv } from '../../server/utils/resolveAuthEnv'
 
 /**
  * Handles the PKCE callback and exchanges the `code` and `verifier`
@@ -9,8 +9,13 @@ import { useGelEnv } from '../../server/composables/useGelEnv'
  * @param {Request} req
  */
 export default defineEventHandler(async (req) => {
-  const { urls } = useGelEnv()
-  const { authBaseUrl } = urls
+  const { authBaseUrl, appUrl } = resolveAuthEnv()
+
+  if (!authBaseUrl) {
+    const err = new H3Error('Auth base URL is not configured')
+    err.statusCode = 500
+    return sendError(req, err)
+  }
 
   const requestUrl = getRequestURL(req)
   const code = requestUrl.searchParams.get('code')
@@ -53,7 +58,8 @@ export default defineEventHandler(async (req) => {
     },
   )
 
+  const secureFlag = (appUrl?.startsWith('https://') ? '; Secure' : '')
   setHeaders(req, {
-    'Set-Cookie': `gel-auth-token=${codeExchangeResponseData.auth_token}; Path=/; HttpOnly`,
+    'Set-Cookie': `gel-auth-token=${codeExchangeResponseData.auth_token}; Path=/; HttpOnly${secureFlag}`,
   })
 })
