@@ -3,4 +3,7 @@ select BlogPost {
   title,
   description,
   content,
+  author: {
+    name
+  }
 }

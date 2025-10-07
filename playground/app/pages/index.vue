@@ -27,6 +27,7 @@ async function deleteBlogPost(id: string) {
       <template #header>
         <div class="flex items-center justify-between">
           <h2>{{ blogpost.title }}</h2>
+          <span class="text-sm opacity-50">{{ blogpost.author.name }} </span>
         </div>
       </template>
 
