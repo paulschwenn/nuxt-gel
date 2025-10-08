@@ -1,28 +1,17 @@
 <script setup lang="ts">
-const model = defineModel<boolean>()
 </script>
 
 <template>
-  <UModal v-model="model">
-    <UCard
-      class="flex flex-col flex-1"
-    >
-      <template #header>
-        <div class="flex items-center justify-between">
-          <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
-            Playground: Gel UI Setup (Auth)
-          </h3>
-          <UButton
-            color="neutral"
-            variant="ghost"
-            icon="i-heroicons-x-mark-20-solid"
-            class="-my-1"
-            @click="model = false"
-          />
-        </div>
-      </template>
+  <UModal title="Playground: Gel UI Setup (Auth)">
+    <UButton
+      icon="i-heroicons-question-mark-circle-20-solid"
+      label="Gel Auth Setup Help"
+      color="primary"
+      variant="subtle"
+    />
 
-      <div class="p-4">
+    <template #body>
+      <div>
         <p class="mb-4">
           Use Gel UI to configure auth for the playground before testing signup/login.
         </p>
@@ -32,7 +21,7 @@ const model = defineModel<boolean>()
         </h4>
         <ul class="list-disc list-inside mb-4 space-y-1">
           <li>From a terminal in the <code>playground</code> directory: <code>gel ui --print-url</code> and open the URL.</li>
-          <li>Or in Nuxt DevTools: open the “Gel” tab (the module auto-adds it during dev)</li>
+          <li>Or in Nuxt DevTools: open the "Gel" tab (the module auto-adds it during dev)</li>
         </ul>
 
         <h4 class="font-semibold mb-2 text-lg">
@@ -76,12 +65,12 @@ http://localhost:3000/auth/reset-password</code></pre>
           Troubleshooting
         </h4>
         <ul class="list-disc list-inside space-y-1">
-          <li>400 “unknown provider”: ensure <code>builtin::local_emailpassword</code> is enabled</li>
-          <li>400 “redirect not allowed”: confirm the exact URL is in <code>allowed_redirect_urls</code></li>
-          <li>“Missing verifier” on verify/reset: use the same browser/session that initiated the flow (PKCE cookie)</li>
+          <li>400 "unknown provider": ensure <code>builtin::local_emailpassword</code> is enabled</li>
+          <li>400 "redirect not allowed": confirm the exact URL is in <code>allowed_redirect_urls</code></li>
+          <li>"Missing verifier" on verify/reset: use the same browser/session that initiated the flow (PKCE cookie)</li>
           <li>If you changed ports/host, update <code>allowed_redirect_urls</code> accordingly</li>
         </ul>
       </div>
-    </UCard>
+    </template>
   </UModal>
 </template>
