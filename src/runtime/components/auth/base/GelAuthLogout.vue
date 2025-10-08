@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { useGelIdentity } from '../../../composables/useGelIdentity'
 
 const props = withDefaults(
@@ -17,8 +18,10 @@ async function logout(redirectTo: string = props.redirectTo) {
   await identityLogout(redirectTo)
 }
 
-if (props.logoutOnSetup)
-  await logout()
+// Trigger logout on client after mount to avoid
+// disrupting render/slot evaluation during setup.
+if (props.logoutOnSetup && import.meta.client)
+  onMounted(() => { void logout() })
 </script>
 
 <template>
