@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { BlogPost } from '#gel/interfaces'
 
-const { isLoggedIn } = useGelIdentity()
+const { isLoggedIn, identity } = useGelIdentity()
 
 const { data, refresh } = await useAsyncData<BlogPost[]>(
   'blogpost-index',
@@ -38,22 +38,21 @@ async function deleteBlogPost(id: string) {
       <template #footer>
         <div class="flex items-center justify-between">
           <div>
-            <UButton color="gray">
+            <UButton color="info" variant="outline">
               <NuxtLink :to="`/blogposts/${blogpost.id}`">
                 Read more
               </NuxtLink>
             </UButton>
           </div>
 
-          <div
-            v-if="isLoggedIn"
-            class="cursor-pointer"
-            @click="() => deleteBlogPost(blogpost.id)"
-          >
-            <UButton icon="i-heroicons-trash" color="red" variant="outline">
-              <NuxtLink :to="`/blogposts/${blogpost.id}`">
-                Delete
-              </NuxtLink>
+          <div v-if="isLoggedIn && identity?.id === blogpost.author.id">
+            <UButton
+              icon="i-heroicons-trash"
+              color="error"
+              variant="outline"
+              @click="deleteBlogPost(blogpost.id)"
+            >
+              Delete
             </UButton>
           </div>
         </div>

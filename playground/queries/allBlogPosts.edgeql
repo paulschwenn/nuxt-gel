@@ -4,6 +4,7 @@ select BlogPost {
   description,
   content,
   author: {
+    id,
     name
   }
 }
