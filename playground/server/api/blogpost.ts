@@ -25,9 +25,12 @@ export default defineEventHandler(async (req) => {
       return blogpost as BlogPost
     }
 
-    const count = await useGel().query('select count(BlogPost);').then(count => count?.[0] || 0)
-
-    return count ? await allBlogPosts() : []
+    try {
+      return await allBlogPosts()
+    }
+    catch {
+      return []
+    }
   }
 
   if (isMethod(req, 'DELETE') && id) {
