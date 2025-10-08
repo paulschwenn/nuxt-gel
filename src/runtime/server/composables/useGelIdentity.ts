@@ -1,5 +1,5 @@
 import type { EventHandlerRequest, H3Event } from 'h3'
-import { getCookie, sendRedirect, setCookie } from 'h3'
+import { deleteCookie, getCookie, sendRedirect } from 'h3'
 import { useGel } from './useGel'
 
 interface UseGelIdentityData<T = any> {
@@ -30,7 +30,9 @@ export async function useGelIdentity<T>(
     if (!req)
       return
 
-    setCookie(req, 'gel-auth-token', '')
+    // Remove the auth cookie rather than setting it to an empty string
+    // to avoid passing an invalid token to Gel on subsequent requests.
+    deleteCookie(req, 'gel-auth-token')
 
     if (redirectTo)
       return sendRedirect(req, '/')

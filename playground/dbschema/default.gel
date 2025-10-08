@@ -1,11 +1,10 @@
 using extension auth;
 
 module default {
+  # May be empty when unauthenticated; consumers should handle optionality.
   global current_user := (
-    assert_single((
-      select User { id, name }
-      filter .identity = global ext::auth::ClientTokenIdentity
-    ))
+    select User { id, name }
+    filter .identity = global ext::auth::ClientTokenIdentity
   );
 
   type User {
