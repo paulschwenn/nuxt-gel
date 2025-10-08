@@ -70,7 +70,7 @@ async function submit() {
       </UFormField>
     </div>
     <template #footer>
-      <UButton color="gray" @click="submit">
+      <UButton color="neutral" @click="submit">
         {{ loading ? 'Loading...' : 'Submit' }}
       </UButton>
     </template>

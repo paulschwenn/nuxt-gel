@@ -4,7 +4,6 @@ import { useRuntimeConfig } from '#imports'
 
 export default defineNitroPlugin(async () => {
   try {
-
     // Get the Nuxt runtime config
     const config = useRuntimeConfig()
 

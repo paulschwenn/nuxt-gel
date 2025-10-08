@@ -34,7 +34,7 @@
         <template #footer>
           <div class="flex items-center gap-2">
             <UButton
-              color="gray"
+              color="neutral"
               type="button"
               :loading="loading"
               @click="() => submit()"

@@ -22,7 +22,7 @@
         <template #footer>
           <UButton
             type="button"
-            color="gray"
+            color="neutral"
             :loading="loading"
             @click="() => submit()"
           >

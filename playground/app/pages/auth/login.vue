@@ -36,7 +36,7 @@
           <div class="flex items-center gap-2">
             <UButton
               type="button"
-              color="gray"
+              color="neutral"
               :loading="loading"
               @click="() => submit()"
             >

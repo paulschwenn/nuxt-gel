@@ -23,7 +23,9 @@ export async function useGelIdentity<T>(
     if (req)
       token = getCookie(req, 'gel-auth-token')
 
-    user = client.querySingle(`select global current_user;`) as T
+    // Ensure we await the identity lookup; otherwise `user` becomes a Promise
+    // and downstream logic like `isLoggedIn` may produce incorrect truthiness.
+    user = await client.querySingle(`select global current_user;`) as T
   }
 
   const logout = async (redirectTo: string | undefined) => {

@@ -11,6 +11,8 @@ export default defineNuxtConfig({
   gel: {
     auth: true,
     oauth: true,
+    // Avoid invoking Gel CLI during typecheck/CI; credentials can be injected manually.
+    injectDbCredentials: false,
     dbschemaDir: 'dbschema/',
   },
   compatibilityDate: '2025-08-23',
@@ -25,6 +27,6 @@ export default defineNuxtConfig({
     // providers: { bunny: false }
   },
   scripts: {
-    typecheck: "nuxt typecheck"
+    typecheck: 'nuxt typecheck',
   },
 })
