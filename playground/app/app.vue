@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { isLoggedIn } = useGelIdentity()
+const isAuthHelpOpen = ref(false)
 
 const navigationItems = computed(() => {
   const items = [
@@ -51,11 +52,23 @@ const navigationItems = computed(() => {
 <template>
   <UApp>
     <UContainer class="p-8 flex flex-col gap-4">
-      <UNavigationMenu orientation="vertical" :items="navigationItems" />
+      <div class="flex justify-between items-start">
+        <UNavigationMenu
+          orientation="vertical"
+          :items="navigationItems"
+        />
+        <UButton
+          icon="i-heroicons-question-mark-circle-20-solid"
+          label="Auth Help"
+          @click="isAuthHelpOpen = true"
+        />
+      </div>
 
       <div>
         <NuxtPage />
       </div>
+
+      <AuthHelp v-model="isAuthHelpOpen" />
     </UContainer>
   </UApp>
 </template>

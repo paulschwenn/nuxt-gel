@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-// @ts-nocheck
 import { computed, ref } from 'vue'
 import { useAsyncData } from '#imports'
 
-const providers = ref<{ name: string, display_name: string }[]>([])
+type Provider = { name: string, display_name: string }
+
+const providers = ref<Provider[]>([])
 const oAuthProviders = computed(() => {
   return providers.value.filter(p => p?.name?.includes('oauth_'))
 })
@@ -13,7 +14,7 @@ const error = ref()
 async function getProviders() {
   loading.value = true
   try {
-    providers.value = await $fetch(`/api/auth/providers`)
+    providers.value = await $fetch<Provider[]>(`/api/auth/providers`)
     return providers.value
   }
   catch (e) {
@@ -32,7 +33,7 @@ defineExpose({
   error,
 })
 
-await useAsyncData<any>(
+await useAsyncData(
   'gel-oauth-providers',
   async () => await getProviders(),
 )
