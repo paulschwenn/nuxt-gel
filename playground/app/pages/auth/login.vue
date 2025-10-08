@@ -43,7 +43,11 @@
               Login
             </UButton>
 
-            <GelAuthProviders />
+            <OAuthProviders />
+            <!-- TODO: Google link does nothing -->
+             <!-- TODO: fix browser console error Hydration completed but contains mismatches.
+             on page refresh (also on register page) 
+             -->
           </div>
         </template>
       </UCard>

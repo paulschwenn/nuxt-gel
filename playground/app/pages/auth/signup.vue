@@ -41,7 +41,7 @@
             >
               Signup
             </UButton>
-            <GelAuthProviders />
+            <OAuthProviders />
           </div>
         </template>
       </UCard>
