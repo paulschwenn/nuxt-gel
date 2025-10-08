@@ -18,6 +18,7 @@ export function resolveAuthEnv() {
   const port = dsn?.port || process.env.NUXT_GEL_PORT
 
   const authBaseUrl = urls.authBaseUrl
+    || process.env.NUXT_GEL_AUTH_BASE_URL
     || (host && port && (branch || dsn?.database)
       ? `http://${host}:${port}/branch/${branch || dsn?.database}/ext/auth/`
       : undefined)
@@ -25,6 +26,17 @@ export function resolveAuthEnv() {
   const verifyRedirectUrl = urls.verifyRedirectUrl || `${appUrl}/auth/verify`
   const resetPasswordUrl = urls.resetPasswordUrl || `${appUrl}/auth/reset-password`
   const oAuthRedirectUrl = urls.oAuthRedirectUrl || `${appUrl}/auth/callback`
+
+  const DEBUG = process.env.NUXT_GEL_DEBUG === '1' || process.env.NUXT_GEL_DEBUG === 'true'
+  if (DEBUG) {
+    console.log('[gel:auth:env]', {
+      appUrl,
+      authBaseUrl,
+      branch,
+      host,
+      port,
+    })
+  }
 
   return {
     appUrl,

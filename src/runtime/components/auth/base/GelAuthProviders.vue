@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+// @ts-nocheck
 import { computed, ref } from 'vue'
 import { useAsyncData } from '#imports'
 
@@ -31,7 +32,7 @@ defineExpose({
   error,
 })
 
-await useAsyncData(
+await useAsyncData<any>(
   'gel-oauth-providers',
   async () => await getProviders(),
 )

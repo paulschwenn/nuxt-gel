@@ -8,7 +8,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
   const cookie = useCookie('gel-auth-token')
 
-  const isLoggedIn = computed(() => !!((identity as Ref<User>)?.value))
+  const isLoggedIn = computed(() => !!identity.value)
 
   async function updateIdentity(event?: H3Event) {
     try {
@@ -17,25 +17,21 @@ export default defineNuxtPlugin(async (nuxtApp) => {
         return
       }
 
+      if (!event)
+        return
+
       const req = getRequestURL(event)
       const url = `${req.protocol}//${req.host}/api/auth/identity`
 
       const idRequest = await fetchWithEvent(event, url).then(r => r.json())
-
-      if (identity) {
-        identity.value = idRequest
-      }
-      else {
-        identity.value = undefined
-        await logout()
-      }
+      identity.value = idRequest
     }
     catch {
       //
     }
   }
 
-  async function logout(redirectTo: string) {
+  async function logout(redirectTo?: string) {
     await $fetch('/api/auth/logout')
     identity.value = undefined
     cookie.value = ''

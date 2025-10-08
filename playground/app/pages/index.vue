@@ -1,11 +1,18 @@
 <script setup lang="ts">
-import type { BlogPost } from '#gel/interfaces'
+// Minimal BlogPost shape for the playground
+interface BlogPost {
+  id: string
+  title: string | null
+  description: string | null
+  content?: string | null
+  author: { id: string, name: string }
+}
 
 const { isLoggedIn, identity } = useGelIdentity()
 
 const { data, refresh } = await useAsyncData<BlogPost[]>(
   'blogpost-index',
-  async () => await $fetch('/api/blogpost'),
+  async () => await ($fetch as any)('/api/blogpost') as BlogPost[],
 )
 
 async function deleteBlogPost(id: string) {

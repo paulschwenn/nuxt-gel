@@ -19,7 +19,8 @@ async function submit() {
   clearTimeout(timeout)
 
   try {
-    const blogPost = await $fetch('/api/blogpost', {
+    type NewBlogPostResult = { id: string }
+    const blogPost = await $fetch<NewBlogPostResult>('/api/blogpost', {
       method: 'POST',
       body: {
         title: title.value,

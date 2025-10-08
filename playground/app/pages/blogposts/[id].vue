@@ -1,11 +1,18 @@
 <script setup lang="ts">
-import type { BlogPost } from '~/dbschema/interfaces'
+// Define a minimal BlogPost shape for the playground to avoid relying on generated types
+interface BlogPost {
+  id: string
+  title: string | null
+  description: string | null
+  content: string | null
+  author?: { id: string, name: string }
+}
 
 const { params } = useRoute()
 
 const { data: blogpost } = await useAsyncData<BlogPost>(
   `blogpost-${params.id}`,
-  async () => await $fetch(`/api/blogpost?id=${params.id}`),
+  async () => await ($fetch as any)(`/api/blogpost?id=${params.id}`) as BlogPost,
 )
 </script>
 
