@@ -56,7 +56,7 @@ const navigationItems = computed(() => {
           orientation="vertical"
           :items="navigationItems"
         />
-        <AuthHelp/>
+        <AuthHelp />
       </div>
 
       <div>

@@ -19,7 +19,7 @@ async function submit() {
   clearTimeout(timeout)
 
   try {
-    type NewBlogPostResult = { id: string }
+    interface NewBlogPostResult { id: string }
     const blogPost = await $fetch<NewBlogPostResult>('/api/blogpost', {
       method: 'POST',
       body: {

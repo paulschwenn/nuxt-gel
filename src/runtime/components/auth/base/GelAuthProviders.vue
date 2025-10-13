@@ -2,7 +2,10 @@
 import { computed, ref } from 'vue'
 import { useAsyncData } from '#imports'
 
-type Provider = { name: string, display_name: string }
+interface Provider {
+  name: string
+  display_name: string
+}
 
 const providers = ref<Provider[]>([])
 const oAuthProviders = computed(() => {

@@ -68,3 +68,4 @@ dbschema/
 **/dbschema/query-builder
 **/queries/*.edgeql.ts
 **/dbschema/interfaces.ts
+repomix-*.*
